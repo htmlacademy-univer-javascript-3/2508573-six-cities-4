@@ -95,5 +95,6 @@ export function HomePage({cardsCount} : HomePageProps) {
           </div>
         </div>
       </div>
-    </main>);
+    </main>
+  );
 }

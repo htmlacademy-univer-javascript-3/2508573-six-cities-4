@@ -50,5 +50,6 @@ export default function Layout() {
         </div>
       </header>
       <Outlet />
-    </div>);
+    </div>
+  );
 }
