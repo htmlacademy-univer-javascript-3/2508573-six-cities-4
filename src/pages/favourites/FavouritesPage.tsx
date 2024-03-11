@@ -1,6 +1,11 @@
-﻿export function FavouritesPage() {
+﻿import { Helmet } from 'react-helmet-async';
+
+export function FavouritesPage() {
   return (
     <>
+      <Helmet>
+        <title>6 cities: favorites</title>
+      </Helmet>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
