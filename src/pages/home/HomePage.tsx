@@ -1,4 +1,4 @@
-﻿import { PlaceCard } from '../components/PlaceCard';
+﻿import { PlaceCard } from '../../components/PlaceCard';
 
 type HomePageProps = {
   cardsCount: number;

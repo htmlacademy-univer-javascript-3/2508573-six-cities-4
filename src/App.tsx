@@ -1,10 +1,11 @@
 ﻿import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { HomePage } from './pages/HomePage';
+import { HomePage } from './pages/home/HomePage';
 import { AppRoutes } from './Constants';
-import { OfferPage } from './pages/OfferPage';
-import { LoginPage } from './pages/LoginPage';
-import { FavouritesPage } from './pages/FavouritesPage';
+import { OfferPage } from './pages/offer/OfferPage';
+import { LoginPage } from './pages/login/LoginPage';
+import { FavouritesPage } from './pages/favourites/FavouritesPage';
 import Layout from './components/Layout';
+import NotFoundPage from './pages/notfound/NotFoundPage';
 
 export function App() {
   return (
@@ -15,6 +16,7 @@ export function App() {
           <Route path={AppRoutes.Offer} element={<OfferPage />} />
           <Route path={AppRoutes.Favorites} element={<FavouritesPage />} />
           <Route path={AppRoutes.Login} element={<LoginPage />} />
+          <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>);
