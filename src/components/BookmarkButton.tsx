@@ -1,4 +1,6 @@
-﻿type BookmarkButtonProps = {
+﻿import cn from 'classnames';
+
+type BookmarkButtonProps = {
     isFavourite: boolean;
 }
 
@@ -7,7 +9,7 @@ export function BookmarkButton({ isFavourite }: BookmarkButtonProps) {
 
   return (
     <button
-      className={`place-card__bookmark-button ${isFavourite ? 'place-card__bookmark-button--active' : ''} button`}
+      className={cn('button', 'place-card__bookmark-button', {'place-card__bookmark-button--active': isFavourite})}
       type="button"
     >
       <svg

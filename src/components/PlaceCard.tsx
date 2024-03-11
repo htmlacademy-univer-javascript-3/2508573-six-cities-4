@@ -49,5 +49,6 @@ export function PlaceCard({ isPremium, imageLink, price, rating, title: name, ty
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
-    </article>);
+    </article>
+  );
 }

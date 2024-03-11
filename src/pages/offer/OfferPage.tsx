@@ -1,44 +1,11 @@
-﻿export function OfferPage() {
+﻿import { Helmet } from 'react-helmet-async';
+
+export function OfferPage() {
   return (
-    <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width={81}
-                  height={41}
-                />
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                  Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+    <>
+      <Helmet>
+        <title>6 cities: offer</title>
+      </Helmet>
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
@@ -94,7 +61,7 @@
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-              Beautiful &amp; luxurious studio at great location
+                  Beautiful &amp; luxurious studio at great location
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width={31} height={33}>
@@ -113,10 +80,10 @@
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">Apartment</li>
                 <li className="offer__feature offer__feature--bedrooms">
-              3 Bedrooms
+                  3 Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-              Max 4 adults
+                  Max 4 adults
                 </li>
               </ul>
               <div className="offer__price">
@@ -155,20 +122,20 @@
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                A quiet cozy and picturesque that hides behind a a river by the
-                unique lightness of Amsterdam. The building is green and from
-                18th century.
+                    A quiet cozy and picturesque that hides behind a a river by the
+                    unique lightness of Amsterdam. The building is green and from
+                    18th century.
                   </p>
                   <p className="offer__text">
-                An independent House, strategically located between Rembrand
-                Square and National Opera, but where the bustle of the city
-                comes to rest in this alley flowery and colorful.
+                    An independent House, strategically located between Rembrand
+                    Square and National Opera, but where the bustle of the city
+                    comes to rest in this alley flowery and colorful.
                   </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
-              Reviews · <span className="reviews__amount">1</span>
+                  Reviews · <span className="reviews__amount">1</span>
                 </h2>
                 <ul className="reviews__list">
                   <li className="reviews__item">
@@ -192,19 +159,19 @@
                         </div>
                       </div>
                       <p className="reviews__text">
-                    A quiet cozy and picturesque that hides behind a a river by
-                    the unique lightness of Amsterdam. The building is green and
-                    from 18th century.
+                        A quiet cozy and picturesque that hides behind a a river by
+                        the unique lightness of Amsterdam. The building is green and
+                        from 18th century.
                       </p>
                       <time className="reviews__time" dateTime="2019-04-24">
-                    April 2019
+                        April 2019
                       </time>
                     </div>
                   </li>
                 </ul>
                 <form className="reviews__form form" action="#" method="post">
                   <label className="reviews__label form__label" htmlFor="review">
-                Your review
+                    Your review
                   </label>
                   <div className="reviews__rating-form form__rating">
                     <input
@@ -297,9 +264,9 @@
                   />
                   <div className="reviews__button-wrapper">
                     <p className="reviews__help">
-                  To submit review please make sure to set{' '}
+                      To submit review please make sure to set{' '}
                       <span className="reviews__star">rating</span> and describe
-                  your stay with at least{' '}
+                      your stay with at least{' '}
                       <b className="reviews__text-amount">50 characters</b>.
                     </p>
                     <button
@@ -307,7 +274,7 @@
                       type="submit"
                       disabled
                     >
-                  Submit
+                      Submit
                     </button>
                   </div>
                 </form>
@@ -319,7 +286,7 @@
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
-          Other places in the neighbourhood
+              Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
               <article className="near-places__card place-card">
@@ -461,6 +428,6 @@
           </section>
         </div>
       </main>
-    </div>
+    </>
   );
 }
