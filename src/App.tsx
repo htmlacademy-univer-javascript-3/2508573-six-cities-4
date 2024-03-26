@@ -6,10 +6,15 @@ import { LoginPage } from './pages/login/LoginPage';
 import { FavouritesPage } from './pages/favourites/FavouritesPage';
 import Layout from './components/Layout';
 import NotFoundPage from './pages/notfound/NotFoundPage';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/routes/PrivateRoute';
 import { HelmetProvider } from 'react-helmet-async';
+import { Offer } from './entities/Offer';
 
-export function App() {
+type AppProps = {
+  offers: Offer[];
+}
+
+export function App({ offers } : AppProps) {
   return (
     <HelmetProvider>
       <BrowserRouter>

@@ -1,27 +1,28 @@
-﻿import { BookmarkButton } from './BookmarkButton';
+﻿import { Offer } from '../../entities/Offer';
+import { BookmarkButton } from './BookmarkButton';
 
-type PlaceCardProps = {
-    isPremium: boolean;
-    imageLink: string;
-    price: number;
-    rating: number;
-    title: string;
-    type: string;
-}
+type PlaceCardProps = Offer;
 
-
-export function PlaceCard({ isPremium, imageLink, price, rating, title: name, type }: PlaceCardProps) {
+export function PlaceCard({
+  isPremium,
+  previewImage,
+  price,
+  rating,
+  title,
+  type,
+}: PlaceCardProps) {
   return (
     <article className="cities__card place-card">
-      {isPremium &&
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>}
+      {isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img
             className="place-card__image"
-            src={imageLink}
+            src={previewImage}
             width={260}
             height={200}
             alt="Place image"
@@ -38,14 +39,12 @@ export function PlaceCard({ isPremium, imageLink, price, rating, title: name, ty
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${rating * 100 / 5}%` }} />
+            <span style={{ width: `${(rating * 100) / 5}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">
-            {name}
-          </a>
+          <a href="#">{title}</a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

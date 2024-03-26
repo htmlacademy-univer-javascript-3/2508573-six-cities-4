@@ -1,5 +1,5 @@
 ﻿import { Helmet } from 'react-helmet-async';
-import { PlaceCard } from '../../components/PlaceCard';
+import { PlaceCard } from '../../components/cards/PlaceCard';
 
 type HomePageProps = {
   cardsCount: number;
@@ -84,8 +84,9 @@ export function HomePage({cardsCount} : HomePageProps) {
                 {[...Array<number>(cardsCount)].map((_, i) => (
                   <PlaceCard
                     // eslint-disable-next-line react/no-array-index-key
+                    id={''}
                     key={i}
-                    imageLink="img/apartment-02.jpg"
+                    previewImage="img/apartment-02.jpg"
                     isPremium
                     price={120}
                     rating={4}
