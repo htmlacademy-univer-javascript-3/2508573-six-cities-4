@@ -1,11 +1,13 @@
 ﻿import { Helmet } from 'react-helmet-async';
-import { PlaceCard } from '../../components/cards/PlaceCard';
+import CardList from '../../components/cards/CardList';
+import { Offer } from '../../entities/Offer';
+import { CardTypes } from '../../Constants';
 
 type HomePageProps = {
-  cardsCount: number;
-}
+  offers: Offer[];
+};
 
-export function HomePage({cardsCount} : HomePageProps) {
+export function HomePage({ offers }: HomePageProps) {
   return (
     <>
       <Helmet>
@@ -80,21 +82,7 @@ export function HomePage({cardsCount} : HomePageProps) {
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {[...Array<number>(cardsCount)].map((_, i) => (
-                  <PlaceCard
-                    // eslint-disable-next-line react/no-array-index-key
-                    id={''}
-                    key={i}
-                    previewImage="img/apartment-02.jpg"
-                    isPremium
-                    price={120}
-                    rating={4}
-                    title="Beautiful & luxurious apartment at great location"
-                    type="Apartment"
-                  />)
-                )}
-              </div>
+              <CardList offers={offers} listType={CardTypes.Cities}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />

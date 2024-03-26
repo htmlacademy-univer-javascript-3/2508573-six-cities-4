@@ -23,16 +23,16 @@ export function App({ offers } : AppProps) {
             <Route
               index
               path={AppRoutes.Main}
-              element={<HomePage cardsCount={5} />}
+              element={<HomePage offers={offers} />}
             />
             <Route
               path={AppRoutes.Offer}
               element={<OfferPage />}
             />
-            <Route element={<PrivateRoute authStatus={AuthorizationStatus.NoAuth} />}>
+            <Route element={<PrivateRoute authStatus={AuthorizationStatus.Auth} />}>
               <Route
                 path={AppRoutes.Favorites}
-                element={<FavouritesPage />}
+                element={<FavouritesPage offers={offers.filter((x) => x.isFavorite)}/>}
               />
             </Route>
             <Route
