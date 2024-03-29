@@ -1,4 +1,5 @@
 ﻿import cn from 'classnames';
+import { Link } from 'react-router-dom';
 
 type LocationHeaderProps = {
   title: string;
@@ -12,9 +13,9 @@ export default function LocationHeader({
   return (
     <div className={cn('favorites__locations locations', {'locations--current': selected})}>
       <div className="locations__item">
-        <a className="locations__item-link" href="#">
+        <Link className="locations__item-link" to="/">
           <span>{title}</span>
-        </a>
+        </Link>
       </div>
     </div>
   );

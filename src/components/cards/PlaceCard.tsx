@@ -1,4 +1,5 @@
-﻿import { CardTypes } from '../../Constants';
+﻿import { Link } from 'react-router-dom';
+import { CardTypes } from '../../Constants';
 import { Offer } from '../../entities/Offer';
 import { BookmarkButton } from './BookmarkButton';
 import cn from 'classnames';
@@ -10,6 +11,7 @@ type PlaceCardProps = Offer & {
 };
 
 export function PlaceCard({
+  id,
   isPremium,
   isFavorite,
   previewImage,
@@ -41,7 +43,7 @@ export function PlaceCard({
           'favorites__image-wrapper': cardType === CardTypes.Favorites,
         })}
       >
-        <a href="#">
+        <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -49,7 +51,7 @@ export function PlaceCard({
             height={cardType === CardTypes.Cities ? 200 : 110}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className={cn('place-card__info', {'favorites__card-info': cardType === CardTypes.Cities})}>
         <div className="place-card__price-wrapper">
@@ -66,7 +68,7 @@ export function PlaceCard({
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
