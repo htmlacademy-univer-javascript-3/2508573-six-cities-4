@@ -1,5 +1,5 @@
 ﻿import { Helmet } from 'react-helmet-async';
-import CardList from '../../components/cards/CardList';
+import CardList, { PlaceCardList } from '../../components/cards/CardList';
 import { Offer } from '../../entities/Offer';
 import { AppRoutes, CardTypes } from '../../Constants';
 import { Link } from 'react-router-dom';
@@ -101,7 +101,9 @@ export function HomePage({ offers }: HomePageProps) {
                   </li>
                 </ul>
               </form>
-              <CardList offers={offers} listType={CardTypes.PlaceCard} />
+              <div className="cities__places-list places__list tabs__content">
+                <PlaceCardList offers={offers} />
+              </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />

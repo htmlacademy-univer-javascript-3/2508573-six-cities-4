@@ -1,6 +1,5 @@
-﻿import { PlaceCard } from '../../components/cards/PlaceCard';
+﻿import { FavoritesCardList } from '../../components/cards/CardList';
 import LocationHeader from '../../components/locations/LocationHeader';
-import { CardTypes } from '../../Constants';
 import { Offer } from '../../entities/Offer';
 
 type FavoritesListProps = {
@@ -16,15 +15,9 @@ export default function FavoritesList({ offers }: FavoritesListProps) {
         <li className="favorites__locations-items" key={city}>
           <LocationHeader title={city} selected />
           <div className="favorites__places">
-            {offers
-              .filter((x) => x.city.name === city)
-              .map((offer) => (
-                <PlaceCard
-                  key={offer.id}
-                  {...offer}
-                  cardType={CardTypes.Favorites}
-                />
-              ))}
+            <FavoritesCardList
+              offers={offers.filter((x) => x.city.name === city)}
+            />
           </div>
         </li>
       ))}

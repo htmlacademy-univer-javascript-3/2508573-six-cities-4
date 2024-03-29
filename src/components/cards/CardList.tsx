@@ -2,27 +2,39 @@
 import { Offer } from '../../entities/Offer';
 import { PlaceCard } from './PlaceCard';
 import { Nullable } from 'vitest';
-import { CardTypes } from '../../Constants';
 
 type CardListProps = {
   offers: Offer[];
-  listType: CardTypes;
+  width: number;
+  height: number;
+  cardType: string;
+  infoClassName?: string;
 };
 
-export default function CardList({ offers, listType }: CardListProps) {
+export function CardList({ offers, ...props }: CardListProps) {
   const [, setActiveCardId] = useState<Nullable<string>>();
 
-  return (
-    <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
-        <PlaceCard
-          key={offer.id}
-          {...offer}
-          cardType={listType}
-          onMouseOver={() => setActiveCardId(offer.id)}
-          onMouseLeave={() => setActiveCardId(null)}
-        />
-      ))}
-    </div>
-  );
+  return offers.map((offer) => (
+    <PlaceCard
+      key={offer.id}
+      offer={offer}
+      {...props}
+      onMouseOver={() => setActiveCardId(offer.id)}
+      onMouseLeave={() => setActiveCardId(null)}
+    />
+  ));
 }
+
+export const PlaceCardList = ({ offers }: { offers: Offer[] }) => (
+  <CardList offers={offers} width={260} height={200} cardType="cities" />
+);
+
+export const FavoritesCardList = ({ offers }: { offers: Offer[] }) => (
+  <CardList
+    offers={offers}
+    width={150}
+    height={110}
+    cardType="favorites"
+    infoClassName="favorites__card-info"
+  />
+);
