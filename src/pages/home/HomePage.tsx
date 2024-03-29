@@ -101,7 +101,7 @@ export function HomePage({ offers }: HomePageProps) {
                   </li>
                 </ul>
               </form>
-              <CardList offers={offers} listType={CardTypes.Cities} />
+              <CardList offers={offers} listType={CardTypes.PlaceCard} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />

@@ -1,4 +1,5 @@
 ﻿import { Offer } from '../entities/Offer';
+import { Users } from './Users';
 
 export const Offers: Offer[] = [
   {
@@ -40,11 +41,7 @@ export const Offers: Offer[] = [
       'Coffee machine',
       'Air conditioning'
     ],
-    host: {
-      isPro: true,
-      name: 'Angelina',
-      avatarUrl: 'https://14.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
-    },
+    host: Users[0],
     isPremium: true,
     isFavorite: true,
     rating: 4.9,
@@ -86,11 +83,7 @@ export const Offers: Offer[] = [
       'Wi-Fi',
       'Towels'
     ],
-    host: {
-      isPro: true,
-      name: 'Angelina',
-      avatarUrl: 'https://14.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
-    },
+    host: Users[0],
     isPremium: false,
     isFavorite: false,
     rating: 1.7,
@@ -133,11 +126,7 @@ export const Offers: Offer[] = [
       'Air conditioning',
       'Laptop friendly workspace'
     ],
-    host: {
-      isPro: true,
-      name: 'Angelina',
-      avatarUrl: 'https://14.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
-    },
+    host: Users[0],
     isPremium: true,
     isFavorite: false,
     rating: 3.6,
@@ -186,11 +175,7 @@ export const Offers: Offer[] = [
       'Cable TV',
       'Laptop friendly workspace'
     ],
-    host: {
-      isPro: true,
-      name: 'Angelina',
-      avatarUrl: 'https://14.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
-    },
+    host: Users[0],
     isPremium: true,
     isFavorite: true,
     rating: 1.9,

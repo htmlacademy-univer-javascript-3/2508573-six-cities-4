@@ -1,25 +1,32 @@
 ﻿import cn from 'classnames';
 
 type BookmarkButtonProps = {
-    isFavourite: boolean;
-}
+  isFavorite: boolean;
+  type: string;
+};
 
-export function BookmarkButton({ isFavourite }: BookmarkButtonProps) {
+function BookmarkButton({ isFavorite: isFavourite, type }: BookmarkButtonProps) {
   const buttonDesc = isFavourite ? 'In bookmarks' : 'To bookmarks';
 
   return (
     <button
-      className={cn('button', 'place-card__bookmark-button', {'place-card__bookmark-button--active': isFavourite})}
+      className={cn('button', `${type}__bookmark-button`, {
+        [`${type}__bookmark-button--active`]: isFavourite,
+      })}
       type="button"
     >
-      <svg
-        className="place-card__bookmark-icon"
-        width={18}
-        height={19}
-      >
+      <svg className={`${type}__bookmark-icon`} width={18} height={19}>
         <use xlinkHref="#icon-bookmark" />
       </svg>
       <span className="visually-hidden">{buttonDesc}</span>
     </button>
   );
 }
+
+export const CardBookmarkButton = (
+  props: Omit<BookmarkButtonProps, 'type'>
+) => <BookmarkButton {...props} type="place-card" />;
+
+export const OfferBookmarkButton = (
+  props: Omit<BookmarkButtonProps, 'type'>
+) => <BookmarkButton {...props} type="offer" />;

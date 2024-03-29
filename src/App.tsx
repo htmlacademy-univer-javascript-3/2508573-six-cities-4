@@ -9,12 +9,14 @@ import NotFoundPage from './pages/notfound/NotFoundPage';
 import PrivateRoute from './components/routes/PrivateRoute';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from './entities/Offer';
+import { Review } from './entities/Review';
 
 type AppProps = {
   offers: Offer[];
+  reviews: Review[];
 }
 
-export function App({ offers } : AppProps) {
+export function App({ offers, reviews } : AppProps) {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -27,7 +29,7 @@ export function App({ offers } : AppProps) {
             />
             <Route
               path={AppRoutes.Offer}
-              element={<OfferPage />}
+              element={<OfferPage offer={offers[0]} reviews={reviews} />}
             />
             <Route element={<PrivateRoute authStatus={AuthorizationStatus.Auth} />}>
               <Route

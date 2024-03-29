@@ -1,7 +1,7 @@
 ﻿import { Link } from 'react-router-dom';
 import { CardTypes } from '../../Constants';
 import { Offer } from '../../entities/Offer';
-import { BookmarkButton } from './BookmarkButton';
+import { CardBookmarkButton } from './BookmarkButton';
 import cn from 'classnames';
 
 type PlaceCardProps = Offer & {
@@ -26,7 +26,7 @@ export function PlaceCard({
   return (
     <article
       className={cn('place-card', {
-        'cities__card': cardType === CardTypes.Cities,
+        'cities__card': cardType === CardTypes.PlaceCard,
         'favorites__card': cardType === CardTypes.Favorites,
       })}
       onMouseOver={onMouseOver}
@@ -39,7 +39,7 @@ export function PlaceCard({
       )}
       <div
         className={cn('place-place-card__image-wrapper', {
-          'cities__image-wrapper': cardType === CardTypes.Cities,
+          'cities__image-wrapper': cardType === CardTypes.PlaceCard,
           'favorites__image-wrapper': cardType === CardTypes.Favorites,
         })}
       >
@@ -47,19 +47,19 @@ export function PlaceCard({
           <img
             className="place-card__image"
             src={previewImage}
-            width={cardType === CardTypes.Cities ? 260 : 150}
-            height={cardType === CardTypes.Cities ? 200 : 110}
+            width={cardType === CardTypes.PlaceCard ? 260 : 150}
+            height={cardType === CardTypes.PlaceCard ? 200 : 110}
             alt="Place image"
           />
         </Link>
       </div>
-      <div className={cn('place-card__info', {'favorites__card-info': cardType === CardTypes.Cities})}>
+      <div className={cn('place-card__info', {'favorites__card-info': cardType === CardTypes.PlaceCard})}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">€{price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <BookmarkButton isFavourite={isFavorite} />
+          <CardBookmarkButton isFavorite={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

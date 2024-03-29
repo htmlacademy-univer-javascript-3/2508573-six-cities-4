@@ -12,6 +12,7 @@ export enum AuthorizationStatus {
 }
 
 export enum CardTypes {
-  Cities,
+  PlaceCard,
   Favorites,
+  Offer
 }
