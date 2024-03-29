@@ -1,11 +1,14 @@
 ﻿import { Helmet } from 'react-helmet-async';
-import { PlaceCard } from '../../components/PlaceCard';
+import { PlaceCardList } from '../../components/cards/CardList';
+import { Offer } from '../../entities/Offer';
+import { AppRoutes } from '../../Constants';
+import { Link } from 'react-router-dom';
 
 type HomePageProps = {
-  cardsCount: number;
-}
+  offers: Offer[];
+};
 
-export function HomePage({cardsCount} : HomePageProps) {
+export function HomePage({ offers }: HomePageProps) {
   return (
     <>
       <Helmet>
@@ -17,34 +20,52 @@ export function HomePage({cardsCount} : HomePageProps) {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link
+                  to={AppRoutes.Main}
+                  className="locations__item-link tabs__item"
+                >
                   <span>Paris</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link
+                  to={AppRoutes.Main}
+                  className="locations__item-link tabs__item"
+                >
                   <span>Cologne</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link
+                  to={AppRoutes.Main}
+                  className="locations__item-link tabs__item"
+                >
                   <span>Brussels</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
+                <Link
+                  to={AppRoutes.Main}
+                  className="locations__item-link tabs__item tabs__item--active"
+                >
                   <span>Amsterdam</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link
+                  to={AppRoutes.Main}
+                  className="locations__item-link tabs__item"
+                >
                   <span>Hamburg</span>
-                </a>
+                </Link>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <Link
+                  to={AppRoutes.Main}
+                  className="locations__item-link tabs__item"
+                >
                   <span>Dusseldorf</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </section>
@@ -81,18 +102,7 @@ export function HomePage({cardsCount} : HomePageProps) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {[...Array<number>(cardsCount)].map((_, i) => (
-                  <PlaceCard
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={i}
-                    imageLink="img/apartment-02.jpg"
-                    isPremium
-                    price={120}
-                    rating={4}
-                    title="Beautiful & luxurious apartment at great location"
-                    type="Apartment"
-                  />)
-                )}
+                <PlaceCardList offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">

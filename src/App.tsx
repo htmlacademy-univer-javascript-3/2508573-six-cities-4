@@ -6,10 +6,17 @@ import { LoginPage } from './pages/login/LoginPage';
 import { FavouritesPage } from './pages/favourites/FavouritesPage';
 import Layout from './components/Layout';
 import NotFoundPage from './pages/notfound/NotFoundPage';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/routes/PrivateRoute';
 import { HelmetProvider } from 'react-helmet-async';
+import { Offer } from './entities/Offer';
+import { Review } from './entities/Review';
 
-export function App() {
+type AppProps = {
+  offers: Offer[];
+  reviews: Review[];
+}
+
+export function App({ offers, reviews } : AppProps) {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -18,16 +25,16 @@ export function App() {
             <Route
               index
               path={AppRoutes.Main}
-              element={<HomePage cardsCount={5} />}
+              element={<HomePage offers={offers} />}
             />
             <Route
               path={AppRoutes.Offer}
-              element={<OfferPage />}
+              element={<OfferPage offer={offers[0]} reviews={reviews} />}
             />
-            <Route element={<PrivateRoute authStatus={AuthorizationStatus.NoAuth} />}>
+            <Route element={<PrivateRoute authStatus={AuthorizationStatus.Auth} />}>
               <Route
                 path={AppRoutes.Favorites}
-                element={<FavouritesPage />}
+                element={<FavouritesPage offers={offers.filter((x) => x.isFavorite)}/>}
               />
             </Route>
             <Route

@@ -2,11 +2,17 @@
   Main: '/',
   Login: '/login',
   Offer: '/offer/:id',
-  Favorites: '/favorites'
+  Favorites: '/favorites',
 };
 
 export enum AuthorizationStatus {
-    Auth = 'AUTH',
-    NoAuth = 'NO_AUTH',
-    Unknown = 'UNKNOWN',
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
+export enum CardTypes {
+  PlaceCard,
+  Favorites,
+  Offer
 }
