@@ -1,7 +1,7 @@
 ﻿import { Helmet } from 'react-helmet-async';
-import CardList, { PlaceCardList } from '../../components/cards/CardList';
+import { PlaceCardList } from '../../components/cards/CardList';
 import { Offer } from '../../entities/Offer';
-import { AppRoutes, CardTypes } from '../../Constants';
+import { AppRoutes } from '../../Constants';
 import { Link } from 'react-router-dom';
 
 type HomePageProps = {
