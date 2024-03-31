@@ -35,7 +35,7 @@ export default function Map({ city, selected, points }: MapProps) {
           .addTo(map);
       });
     }
-  }, [map, points]);
+  }, [map, points, selected]);
 
   return (
     <div style={{ height: '500px' }} ref={mapRef} className="cities__map" />

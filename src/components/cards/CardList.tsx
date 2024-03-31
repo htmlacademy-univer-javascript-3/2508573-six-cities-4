@@ -1,5 +1,4 @@
-﻿import { useState } from 'react';
-import { Offer } from '../../entities/Offer';
+﻿import { Offer } from '../../entities/Offer';
 import { PlaceCard } from './PlaceCard';
 import { Nullable } from 'vitest';
 
