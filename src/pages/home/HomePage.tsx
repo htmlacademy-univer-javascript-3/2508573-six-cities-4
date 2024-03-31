@@ -118,6 +118,7 @@ export function HomePage({ offers, city }: HomePageProps) {
                 city={city}
                 points={points}
                 selected={points.find((p) => p.name === selectedId)}
+                className="cities__map"
               />
             </div>
           </div>

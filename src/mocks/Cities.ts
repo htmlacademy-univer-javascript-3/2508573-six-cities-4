@@ -1,10 +1,11 @@
-﻿import { Location } from '../entities/Location';
+﻿import { DEFAULT_MAP_ZOOM } from '../Constants';
+import { Location } from '../entities/Location';
 import { Point } from '../entities/Point';
 
 export const MockLocation: Point = {
   latitude:  52.379863,
   longitude: 4.894327,
-  zoom: 12
+  zoom: DEFAULT_MAP_ZOOM
 };
 
 export const Cities: Location[] = [

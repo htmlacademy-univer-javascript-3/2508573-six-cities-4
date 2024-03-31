@@ -38,3 +38,12 @@ export const FavoritesCardList = (props: CardListProps) => (
     infoClassName="favorites__card-info"
   />
 );
+
+export const NearbyCardList = (props: CardListProps) => (
+  <CardList
+    {...props}
+    width={260}
+    height={200}
+    cardType="near-places"
+  />
+);

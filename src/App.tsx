@@ -15,9 +15,9 @@ import { Cities } from './mocks/Cities';
 type AppProps = {
   offers: Offer[];
   reviews: Review[];
-}
+};
 
-export function App({ offers, reviews } : AppProps) {
+export function App({ offers, reviews }: AppProps) {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -26,26 +26,36 @@ export function App({ offers, reviews } : AppProps) {
             <Route
               index
               path={AppRoutes.Main}
-              element={<HomePage offers={offers} city={Cities.find((c) => c.name === 'Amsterdam') || Cities[0]}/>}
+              element={
+                <HomePage
+                  offers={offers}
+                  city={Cities.find((c) => c.name === 'Amsterdam') || Cities[0]}
+                />
+              }
             />
             <Route
               path={AppRoutes.Offer}
-              element={<OfferPage offer={offers[0]} reviews={reviews} />}
+              element={
+                <OfferPage
+                  offer={offers[0]}
+                  reviews={reviews}
+                  nearbyOffers={offers}
+                  authStatus={AuthorizationStatus.Auth}
+                />
+              }
             />
-            <Route element={<PrivateRoute authStatus={AuthorizationStatus.Auth} />}>
+            <Route
+              element={<PrivateRoute authStatus={AuthorizationStatus.Auth} />}
+            >
               <Route
                 path={AppRoutes.Favorites}
-                element={<FavouritesPage offers={offers.filter((x) => x.isFavorite)}/>}
+                element={
+                  <FavouritesPage offers={offers.filter((x) => x.isFavorite)} />
+                }
               />
             </Route>
-            <Route
-              path={AppRoutes.Login}
-              element={<LoginPage />}
-            />
-            <Route
-              path='*'
-              element={<NotFoundPage />}
-            />
+            <Route path={AppRoutes.Login} element={<LoginPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

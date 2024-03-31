@@ -8,11 +8,12 @@ import { Nullable } from 'vitest';
 
 type MapProps = {
   city: Location;
-  selected: Nullable<Location>;
+  selected?: Nullable<Location>;
   points: Location[];
+  className?: string;
 };
 
-export default function Map({ city, selected, points }: MapProps) {
+export default function Map({ city, selected, points, className }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city.point);
 
@@ -38,6 +39,6 @@ export default function Map({ city, selected, points }: MapProps) {
   }, [map, points, selected]);
 
   return (
-    <div style={{ height: '500px' }} ref={mapRef} className="cities__map" />
+    <div style={{ height: '100%' }} ref={mapRef} className={className} />
   );
 }
