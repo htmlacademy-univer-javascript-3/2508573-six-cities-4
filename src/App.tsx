@@ -30,7 +30,7 @@ export function App({ offers, reviews } : AppProps) {
             />
             <Route
               path={AppRoutes.Offer}
-              element={<OfferPage offer={offers[0]} reviews={reviews} />}
+              element={<OfferPage offer={offers[0]} reviews={reviews} nearbyOffers={offers}/>}
             />
             <Route element={<PrivateRoute authStatus={AuthorizationStatus.Auth} />}>
               <Route

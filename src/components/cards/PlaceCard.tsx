@@ -33,7 +33,7 @@ export function PlaceCard({
         </div>
       )}
       <div
-        className={cn('place-place-card__image-wrapper', `${cardType}__image-wrapper`)}
+        className={cn('place-card__image-wrapper', `${cardType}__image-wrapper`)}
       >
         <Link to={`/offer/${offer.id}`}>
           <img
