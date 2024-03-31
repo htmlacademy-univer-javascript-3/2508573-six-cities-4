@@ -1,4 +1,5 @@
 ﻿import { Offer } from '../entities/Offer';
+import { Cities } from './Cities';
 import { Users } from './Users';
 
 export const Offers: Offer[] = [
@@ -17,17 +18,10 @@ export const Offers: Offer[] = [
       'https://14.design.htmlacademy.pro/static/hotel/11.jpg',
       'https://14.design.htmlacademy.pro/static/hotel/6.jpg'
     ],
-    city: {
-      name: 'Paris',
-      location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
-        zoom: 13
-      }
-    },
+    city: Cities[3],
     location: {
-      latitude: 48.868610000000004,
-      longitude: 2.342499,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     goods: [
@@ -63,17 +57,10 @@ export const Offers: Offer[] = [
       'https://14.design.htmlacademy.pro/static/hotel/9.jpg',
       'https://14.design.htmlacademy.pro/static/hotel/12.jpg'
     ],
-    city: {
-      name: 'Paris',
-      location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
-        zoom: 13
-      }
-    },
+    city: Cities[3],
     location: {
-      latitude: 48.858610000000006,
-      longitude: 2.330499,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     goods: [
@@ -105,17 +92,10 @@ export const Offers: Offer[] = [
       'https://14.design.htmlacademy.pro/static/hotel/16.jpg',
       'https://14.design.htmlacademy.pro/static/hotel/3.jpg'
     ],
-    city: {
-      name: 'Paris',
-      location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
-        zoom: 13
-      }
-    },
+    city: Cities[3],
     location: {
-      latitude: 48.834610000000005,
-      longitude: 2.335499,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 16
     },
     goods: [
@@ -148,17 +128,10 @@ export const Offers: Offer[] = [
       'https://14.design.htmlacademy.pro/static/hotel/7.jpg',
       'https://14.design.htmlacademy.pro/static/hotel/5.jpg'
     ],
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.37454,
-        longitude: 4.897976,
-        zoom: 13
-      }
-    },
+    city: Cities[3],
     location: {
-      latitude: 48.85761,
-      longitude: 2.358499,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 16
     },
     goods: [

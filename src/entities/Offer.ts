@@ -1,14 +1,14 @@
-﻿import { City } from './City';
+﻿import { Location } from './Location';
 import { UserData } from './User';
-import { Location } from './Location';
+import { Point } from './Point';
 
 export type Offer = {
   id: string;
   title: string;
   type: string;
   price: number;
-  city: City;
-  location: Location;
+  city: Location;
+  location: Point;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;

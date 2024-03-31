@@ -1,35 +1,35 @@
-﻿import { City } from '../entities/City';
-import { Location } from '../entities/Location';
+﻿import { Location } from '../entities/Location';
+import { Point } from '../entities/Point';
 
-export const MockLocation: Location = {
-  latitude: 0,
-  longitude: 0,
-  zoom: 1
+export const MockLocation: Point = {
+  latitude:  52.379863,
+  longitude: 4.894327,
+  zoom: 12
 };
 
-export const Cities: City[] = [
+export const Cities: Location[] = [
   {
     name: 'Paris',
-    location: MockLocation
+    point: MockLocation
   },
   {
     name: 'Cologne',
-    location: MockLocation
+    point: MockLocation
   },
   {
     name: 'Brussels',
-    location: MockLocation
+    point: MockLocation
   },
   {
     name: 'Amsterdam',
-    location: MockLocation
+    point: MockLocation
   },
   {
     name: 'Hamburg',
-    location: MockLocation
+    point: MockLocation
   },
   {
     name: 'Dusseldorf',
-    location: MockLocation
+    point: MockLocation
   }
 ];
