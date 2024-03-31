@@ -10,6 +10,7 @@ import PrivateRoute from './components/routes/PrivateRoute';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offer } from './entities/Offer';
 import { Review } from './entities/Review';
+import { Cities } from './mocks/Cities';
 
 type AppProps = {
   offers: Offer[];
@@ -25,7 +26,7 @@ export function App({ offers, reviews } : AppProps) {
             <Route
               index
               path={AppRoutes.Main}
-              element={<HomePage offers={offers} />}
+              element={<HomePage offers={offers} city={Cities.find((c) => c.name === 'Amsterdam') || Cities[0]}/>}
             />
             <Route
               path={AppRoutes.Offer}

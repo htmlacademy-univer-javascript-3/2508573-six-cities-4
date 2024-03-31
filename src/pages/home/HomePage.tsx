@@ -3,12 +3,20 @@ import { PlaceCardList } from '../../components/cards/CardList';
 import { Offer } from '../../entities/Offer';
 import { AppRoutes } from '../../Constants';
 import { Link } from 'react-router-dom';
+import { Location } from '../../entities/Location';
+import { useState } from 'react';
+import { Nullable } from 'vitest';
+import Map from '../../components/map/Map';
 
 type HomePageProps = {
   offers: Offer[];
+  city: Location;
 };
 
-export function HomePage({ offers }: HomePageProps) {
+export function HomePage({ offers, city }: HomePageProps) {
+  const [selectedId, setSelectedId] = useState<Nullable<string>>();
+  const points = offers.map((o) => ({ name: o.id, point: o.location }));
+
   return (
     <>
       <Helmet>
@@ -102,11 +110,15 @@ export function HomePage({ offers }: HomePageProps) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCardList offers={offers} />
+                <PlaceCardList offers={offers} onItemHover={setSelectedId} />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <Map
+                city={city}
+                points={points}
+                selected={points.find((p) => p.name === selectedId)}
+              />
             </div>
           </div>
         </div>

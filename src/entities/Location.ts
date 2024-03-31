@@ -1,5 +1,6 @@
-﻿export type Location = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
+﻿import { Point } from './Point';
+
+export type Location = {
+  name: string;
+  point: Point;
 };

@@ -2,6 +2,7 @@
 import { Offer } from '../../entities/Offer';
 import { CardBookmarkButton } from './BookmarkButton';
 import cn from 'classnames';
+import { Nullable } from 'vitest';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -9,8 +10,7 @@ type PlaceCardProps = {
   width: number;
   height: number;
   infoClassName?: string;
-  onMouseOver?: () => void;
-  onMouseLeave?: () => void;
+  onHover?: (id: Nullable<string>) => void;
 };
 
 export function PlaceCard({
@@ -19,14 +19,13 @@ export function PlaceCard({
   width,
   height,
   infoClassName,
-  onMouseOver,
-  onMouseLeave,
+  onHover,
 }: PlaceCardProps) {
   return (
     <article
       className={cn('place-card', `${cardType}__card`)}
-      onMouseOver={onMouseOver}
-      onMouseLeave={onMouseLeave}
+      onMouseOver={() => onHover?.call(null, offer.id)}
+      onMouseLeave={() => onHover?.call(null, null)}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
