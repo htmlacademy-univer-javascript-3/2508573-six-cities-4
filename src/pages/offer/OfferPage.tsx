@@ -92,7 +92,7 @@ export function OfferPage({ offer, reviews, nearbyOffers, authStatus }: OfferPag
               </div>
               <section className="offer__reviews reviews">
                 <ReviewList reviews={reviews} />
-                <ReviewForm />
+                {authStatus === AuthorizationStatus.Auth && <ReviewForm />}
               </section>
             </div>
           </div>
