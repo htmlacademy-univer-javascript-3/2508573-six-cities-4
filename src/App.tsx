@@ -26,7 +26,7 @@ export function App({ offers, reviews } : AppProps) {
             <Route
               index
               path={AppRoutes.Main}
-              element={<HomePage offers={offers} city={Cities.find((c) => c.name === 'Amsterdam')}/>}
+              element={<HomePage offers={offers} city={Cities.find((c) => c.name === 'Amsterdam') || Cities[0]}/>}
             />
             <Route
               path={AppRoutes.Offer}
