@@ -1,20 +1,27 @@
 ﻿import { Helmet } from 'react-helmet-async';
 import { PlaceCardList } from '../../components/cards/CardList';
-import { Offer } from '../../entities/Offer';
-import { Location } from '../../entities/Location';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Nullable } from 'vitest';
 import Map from '../../components/map/Map';
 import Tabs from '../../components/tabs/Tabs';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fillOrdersAction } from '../../store/Actions';
 
-type HomePageProps = {
-  offers: Offer[];
-  city: Location;
-};
-
-export function HomePage({ offers, city }: HomePageProps) {
+export function HomePage() {
   const [selectedId, setSelectedId] = useState<Nullable<string>>();
+
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) =>
+    state.offers.filter((o) => o.city.name === city.name)
+  );
+
   const points = offers.map((o) => ({ name: o.id, point: o.location }));
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fillOrdersAction());
+  });
 
   return (
     <>
@@ -28,7 +35,9 @@ export function HomePage({ offers, city }: HomePageProps) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">
+                {offers.length} places to stay in {city.name}
+              </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

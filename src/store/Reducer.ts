@@ -2,16 +2,11 @@
 import { Cities } from '../mocks/Cities';
 import { Offers } from '../mocks/Offers';
 import { changeCityAction, fillOrdersAction } from './Actions';
-import { Location } from '../entities/Location';
-import { Offer } from '../entities/Offer';
+import { State } from '../entities/State';
 
-type State = {
-  city: Location;
-  offers: Offer[];
-};
 
 const initialState: State = {
-  city: Cities.find((c) => c.name === 'Amsterdam') || Cities[0],
+  city: Cities[0],
   offers: [],
 };
 
