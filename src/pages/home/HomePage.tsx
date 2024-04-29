@@ -1,8 +1,6 @@
 ﻿import { Helmet } from 'react-helmet-async';
 import { PlaceCardList } from '../../components/cards/CardList';
 import { Offer } from '../../entities/Offer';
-import { AppRoutes } from '../../Constants';
-import { Link } from 'react-router-dom';
 import { Location } from '../../entities/Location';
 import { useState } from 'react';
 import { Nullable } from 'vitest';
