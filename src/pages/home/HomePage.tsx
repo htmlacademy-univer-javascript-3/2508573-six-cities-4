@@ -7,6 +7,7 @@ import { Location } from '../../entities/Location';
 import { useState } from 'react';
 import { Nullable } from 'vitest';
 import Map from '../../components/map/Map';
+import Tabs from '../../components/tabs/Tabs';
 
 type HomePageProps = {
   offers: Offer[];
@@ -24,60 +25,7 @@ export function HomePage({ offers, city }: HomePageProps) {
       </Helmet>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <Link
-                  to={AppRoutes.Main}
-                  className="locations__item-link tabs__item"
-                >
-                  <span>Paris</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link
-                  to={AppRoutes.Main}
-                  className="locations__item-link tabs__item"
-                >
-                  <span>Cologne</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link
-                  to={AppRoutes.Main}
-                  className="locations__item-link tabs__item"
-                >
-                  <span>Brussels</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link
-                  to={AppRoutes.Main}
-                  className="locations__item-link tabs__item tabs__item--active"
-                >
-                  <span>Amsterdam</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link
-                  to={AppRoutes.Main}
-                  className="locations__item-link tabs__item"
-                >
-                  <span>Hamburg</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link
-                  to={AppRoutes.Main}
-                  className="locations__item-link tabs__item"
-                >
-                  <span>Dusseldorf</span>
-                </Link>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <Tabs selectedCity={city.name} />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
