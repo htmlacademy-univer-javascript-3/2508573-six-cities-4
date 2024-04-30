@@ -18,12 +18,17 @@ export function HomePage() {
     dispatch(fillOrdersAction());
   });
 
+  const isEmpty = offers.length === 0;
   return (
     <>
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <main className="page__main page__main--index">
+      <main
+        className={cn('page__main', 'page__main--index', {
+          'page__main--index-empty': isEmpty,
+        })}
+      >
         <h1 className="visually-hidden">Cities</h1>
         <Tabs
           selectedCity={city}
@@ -35,7 +40,7 @@ export function HomePage() {
               'cities__places-container--empty': offers.length === 0,
             })}
           >
-            {offers.length > 0 ? (
+            {!isEmpty ? (
               <OfferList offers={offers} city={offers[0].city} />
             ) : (
               <EmptyOfferList city={city} />
