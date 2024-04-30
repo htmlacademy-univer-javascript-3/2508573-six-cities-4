@@ -4,6 +4,9 @@ import { Nullable } from 'vitest';
 import Map from '../../components/map/Map';
 import { Offer } from '../../entities/Offer';
 import { Location } from '../../entities/Location';
+import { SortingOrderList } from '../../components/sorting-order/SortingOrderList';
+import { useAppSelector } from '../../store/Hooks';
+import { sortingOrders } from '../../entities/SortingOrder';
 
 type OfferListProps = {
   offers: Offer[];
@@ -12,6 +15,9 @@ type OfferListProps = {
 
 export function OfferList({ offers, city }: OfferListProps) {
   const [selectedId, setSelectedId] = useState<Nullable<string>>();
+  const order = useAppSelector((state) => state.sortingOrder);
+  offers = offers.sort(sortingOrders[order]);
+
   const points = offers.map((o) => ({ name: o.id, point: o.location }));
 
   return (
@@ -21,29 +27,7 @@ export function OfferList({ offers, city }: OfferListProps) {
         <b className="places__found">
           {offers.length} places to stay in {city.name}
         </b>
-        <form className="places__sorting" action="#" method="get">
-          <span className="places__sorting-caption">Sort by</span>
-          <span className="places__sorting-type" tabIndex={0}>
-            Popular
-            <svg className="places__sorting-arrow" width={7} height={4}>
-              <use xlinkHref="#icon-arrow-select" />
-            </svg>
-          </span>
-          <ul className="places__options places__options--custom places__options--opened">
-            <li className="places__option places__option--active" tabIndex={0}>
-              Popular
-            </li>
-            <li className="places__option" tabIndex={0}>
-              Price: low to high
-            </li>
-            <li className="places__option" tabIndex={0}>
-              Price: high to low
-            </li>
-            <li className="places__option" tabIndex={0}>
-              Top rated first
-            </li>
-          </ul>
-        </form>
+        {<SortingOrderList />}
         <div className="cities__places-list places__list tabs__content">
           <PlaceCardList offers={offers} onItemHover={setSelectedId} />
         </div>

@@ -1,7 +1,7 @@
 ﻿import { Helmet } from 'react-helmet-async';
 import { useEffect } from 'react';
 import Tabs from '../../components/tabs/Tabs';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/Hooks';
 import { changeCityAction, fillOrdersAction } from '../../store/Actions';
 import cn from 'classnames';
 import { OfferList, EmptyOfferList } from './OfferList';
@@ -16,7 +16,7 @@ export function HomePage() {
 
   useEffect(() => {
     dispatch(fillOrdersAction());
-  });
+  }, [dispatch]);
 
   const isEmpty = offers.length === 0;
   return (
