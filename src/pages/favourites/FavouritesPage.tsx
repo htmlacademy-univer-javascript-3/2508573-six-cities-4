@@ -8,7 +8,7 @@ type FavoritesPageProps = {
 };
 
 export function FavouritesPage({ offers }: FavoritesPageProps) {
-
+  // TODO: Empty version
   return (
     <>
       <Helmet>
