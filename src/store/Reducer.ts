@@ -6,7 +6,7 @@ import { State } from '../entities/State';
 
 
 const initialState: State = {
-  city: Cities[0],
+  city: Cities[0].name,
   offers: [],
 };
 

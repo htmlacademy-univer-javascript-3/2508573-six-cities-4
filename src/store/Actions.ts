@@ -1,9 +1,8 @@
 ﻿import { createAction } from '@reduxjs/toolkit';
-import { Location } from '../entities/Location';
 
 export const changeCityAction = createAction(
   'CHANGE_CITY',
-  (value: Location) => ({
+  (value: string) => ({
     payload: value,
   })
 );
