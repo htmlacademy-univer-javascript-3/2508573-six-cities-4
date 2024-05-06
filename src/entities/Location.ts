@@ -2,5 +2,5 @@
 
 export type Location = {
   name: string;
-  point: Point;
+  location: Point;
 };

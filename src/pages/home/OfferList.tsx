@@ -18,7 +18,7 @@ export function OfferList({ offers, city }: OfferListProps) {
   const order = useAppSelector((state) => state.sortingOrder);
   offers = offers.sort(sortingOrders[order]);
 
-  const points = offers.map((o) => ({ name: o.id, point: o.location }));
+  const points = offers.map((o) => ({ name: o.id, location: o.location }));
 
   return (
     <>
