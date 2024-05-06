@@ -5,7 +5,6 @@ import { useEffect, useRef } from 'react';
 import { useMap } from './useMap';
 import { currentCustomIcon, defaultCustomIcon } from '../../Constants';
 import { Nullable } from 'vitest';
-import { Point } from '../../entities/Point';
 
 type MapProps = {
   city: Location;
@@ -47,6 +46,5 @@ export default function Map({ city, selected, points, className }: MapProps) {
 
   return (
     <div style={{ height: '100%' }} ref={mapRef} className={className} />
-    
   );
 }

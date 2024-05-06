@@ -100,7 +100,7 @@ export function OfferPage({ offer, reviews, nearbyOffers, authStatus }: OfferPag
             <Map
               city={{
                 ...offerLocation,
-                point: { ...offerLocation.point, zoom: DEFAULT_MAP_ZOOM },
+                location: { ...offerLocation.point, zoom: DEFAULT_MAP_ZOOM },
               }}
               points={nearbyPoints}
               selected={offerLocation}

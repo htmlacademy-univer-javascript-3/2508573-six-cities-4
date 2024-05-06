@@ -1,8 +1,7 @@
 ﻿import { Helmet } from 'react-helmet-async';
-import { useEffect } from 'react';
 import Tabs from '../../components/tabs/Tabs';
 import { useAppDispatch, useAppSelector } from '../../store/Hooks';
-import { changeCityAction, fillOrdersAction } from '../../store/Actions';
+import { changeCityAction } from '../../store/Actions';
 import cn from 'classnames';
 import { OfferList, EmptyOfferList } from './OfferList';
 
@@ -11,13 +10,8 @@ export function HomePage() {
   const offers = useAppSelector((state) =>
     state.offers.filter((o) => o.city.name === city)
   );
-
+  const isLoading = useAppSelector((state) => state.offersLoadingStatus);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fillOrdersAction());
-  }, [dispatch]);
-
   const isEmpty = offers.length === 0;
   return (
     <>
@@ -40,7 +34,7 @@ export function HomePage() {
               'cities__places-container--empty': offers.length === 0,
             })}
           >
-            {!isEmpty ? (
+            {!isLoading && !isEmpty ? (
               <OfferList offers={offers} city={offers[0].city} />
             ) : (
               <EmptyOfferList city={city} />
