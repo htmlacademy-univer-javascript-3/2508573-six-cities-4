@@ -1,8 +1,5 @@
-﻿import { Offer } from './Offer';
-import { SortingOrder } from './SortingOrder';
+﻿import { store } from '../store/Index';
 
-export type State = {
-  city: string;
-  offers: Offer[];
-  sortingOrder: SortingOrder;
-};
+export type State = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
