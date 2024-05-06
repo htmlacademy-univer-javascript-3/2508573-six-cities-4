@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { useMap } from './useMap';
 import { currentCustomIcon, defaultCustomIcon } from '../../Constants';
 import { Nullable } from 'vitest';
+import { Point } from '../../entities/Point';
 
 type MapProps = {
   city: Location;
@@ -15,7 +16,13 @@ type MapProps = {
 
 export default function Map({ city, selected, points, className }: MapProps) {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city.point);
+  const map = useMap(mapRef, city.location);
+
+  useEffect(() => {
+    if (map) {
+      map.setView({ lat: city.location.latitude, lng: city.location.longitude}, city.location.zoom);
+    }
+  }, [map, city]);
 
   useEffect(() => {
     if (map) {
@@ -23,8 +30,8 @@ export default function Map({ city, selected, points, className }: MapProps) {
         leaflet
           .marker(
             {
-              lat: loc.point.latitude,
-              lng: loc.point.longitude,
+              lat: loc.location.latitude,
+              lng: loc.location.longitude,
             },
             {
               icon:
@@ -40,5 +47,6 @@ export default function Map({ city, selected, points, className }: MapProps) {
 
   return (
     <div style={{ height: '100%' }} ref={mapRef} className={className} />
+    
   );
 }
