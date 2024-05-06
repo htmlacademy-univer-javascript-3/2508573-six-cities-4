@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../store/Hooks';
 import { changeCityAction } from '../../store/Actions';
 import cn from 'classnames';
 import { OfferList, EmptyOfferList } from './OfferList';
+import styles from './HomePage.module.css';
 
 export function HomePage() {
   const city = useAppSelector((state) => state.city);
@@ -29,17 +30,21 @@ export function HomePage() {
           onClick={(c) => dispatch(changeCityAction(c))}
         />
         <div className="cities">
-          <div
-            className={cn('cities__places-container', 'container', {
-              'cities__places-container--empty': offers.length === 0,
-            })}
-          >
-            {!isLoading && !isEmpty ? (
-              <OfferList offers={offers} city={offers[0].city} />
-            ) : (
-              <EmptyOfferList city={city} />
-            )}
-          </div>
+          {isLoading ? (
+            <div className={styles['cities__places-loading']} />
+          ) : (
+            <div
+              className={cn('cities__places-container', 'container', {
+                'cities__places-container--empty': offers.length === 0,
+              })}
+            >
+              {!isEmpty ? (
+                <OfferList offers={offers} city={offers[0].city} />
+              ) : (
+                <EmptyOfferList city={city} />
+              )}
+            </div>
+          )}
         </div>
       </main>
     </>
