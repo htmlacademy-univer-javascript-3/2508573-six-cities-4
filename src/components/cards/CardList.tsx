@@ -12,7 +12,6 @@ type GenericCardListProps = {
 };
 
 export function CardList({ offers, onItemHover, ...props }: GenericCardListProps) {
-
   return offers.map((offer) => (
     <MemoPlaceCard
       key={offer.id}

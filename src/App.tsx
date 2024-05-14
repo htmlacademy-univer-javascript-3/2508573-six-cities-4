@@ -37,16 +37,10 @@ export function App({ offers, reviews }: AppProps) {
                   />
                 }
               />
-              <Route
-                element={<PrivateRoute />}
-              >
+              <Route element={<PrivateRoute />}>
                 <Route
                   path={AppRoutes.Favorites}
-                  element={
-                    <FavouritesPage
-                      offers={offers.filter((x) => x.isFavorite)}
-                    />
-                  }
+                  element={<FavouritesPage />}
                 />
               </Route>
               <Route path={AppRoutes.Login} element={<LoginPage />} />

@@ -1,14 +1,13 @@
 ﻿import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../entities/Offer';
 import FavoritesList from './FavoritesList';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
 
-type FavoritesPageProps = {
-  offers: Offer[];
-};
 
-export function FavouritesPage({ offers }: FavoritesPageProps) {
+export function FavouritesPage() {
   // TODO: Empty version
+  const favorites = useAppSelector((state) => state.offers.favorites);
+
   return (
     <>
       <Helmet>
@@ -18,7 +17,7 @@ export function FavouritesPage({ offers }: FavoritesPageProps) {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList offers={offers} />
+            <FavoritesList offers={favorites} />
           </section>
         </div>
       </main>

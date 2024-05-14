@@ -1,12 +1,11 @@
 ﻿import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Cities } from '../../mocks/Cities';
 
 type CityState = {
   city: string;
 }
 
 const initialState: CityState = {
-  city: Cities[0].name,
+  city: 'Paris',
 };
 
 export const citySlice = createSlice({
