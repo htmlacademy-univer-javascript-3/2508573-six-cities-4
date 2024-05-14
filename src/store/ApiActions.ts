@@ -1,17 +1,13 @@
 ﻿import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../entities/State';
 import { AxiosInstance } from 'axios';
-import {
-  changeAuthStatusAction,
-  fillOrdersAction,
-  setOrdersLoadingStatusAction,
-  setUserAction,
-} from './Actions';
 import { ApiRoutes, AuthorizationStatus } from '../Constants';
 import { Offer } from '../entities/Offer';
 import { User } from '../entities/User';
 import { AuthData } from '../entities/AuthData';
 import { dropToken, saveToken } from '../services/token';
+import { setUser, changeAuthStatus } from './slices/AuthSlice';
+import { fillOrders, setOrdersLoadingStatus } from './slices/OffersSlice';
 
 export const fetchOrdersAction = createAsyncThunk<
   void,
@@ -22,10 +18,10 @@ export const fetchOrdersAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('FETCH_OFFERS', async (_arg, { dispatch, extra: api }) => {
-  dispatch(setOrdersLoadingStatusAction(true));
+  dispatch(setOrdersLoadingStatus(true));
   const { data } = await api.get<Offer[]>(ApiRoutes.Offers);
-  dispatch(setOrdersLoadingStatusAction(false));
-  dispatch(fillOrdersAction(data));
+  dispatch(setOrdersLoadingStatus(false));
+  dispatch(fillOrders(data));
 });
 
 export const checkAuthAction = createAsyncThunk<
@@ -39,10 +35,10 @@ export const checkAuthAction = createAsyncThunk<
 >('CHECK_AUTH', async (_arg, { dispatch, extra: api }) => {
   try {
     const user = (await api.get<User>(ApiRoutes.Login)).data;
-    dispatch(setUserAction(user));
-    dispatch(changeAuthStatusAction(AuthorizationStatus.Auth));
+    dispatch(setUser(user));
+    dispatch(changeAuthStatus(AuthorizationStatus.Auth));
   } catch {
-    dispatch(changeAuthStatusAction(AuthorizationStatus.NoAuth));
+    dispatch(changeAuthStatus(AuthorizationStatus.NoAuth));
   }
 });
 
@@ -57,10 +53,11 @@ export const loginAction = createAsyncThunk<
 >(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const user = (await api.post<User>(ApiRoutes.Login, { email, password })).data;
-    dispatch(setUserAction(user));
+    const user = (await api.post<User>(ApiRoutes.Login, { email, password }))
+      .data;
+    dispatch(setUser(user));
     saveToken(user.token);
-    dispatch(changeAuthStatusAction(AuthorizationStatus.Auth));
+    dispatch(changeAuthStatus(AuthorizationStatus.Auth));
   }
 );
 
@@ -75,5 +72,5 @@ export const logoutAction = createAsyncThunk<
 >('user/logout', async (_arg, { dispatch, extra: api }) => {
   await api.delete(ApiRoutes.Logout);
   dropToken();
-  dispatch(changeAuthStatusAction(AuthorizationStatus.NoAuth));
+  dispatch(changeAuthStatus(AuthorizationStatus.NoAuth));
 });

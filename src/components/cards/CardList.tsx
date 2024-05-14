@@ -1,5 +1,5 @@
 ﻿import { Offer } from '../../entities/Offer';
-import { PlaceCard } from './PlaceCard';
+import { MemoPlaceCard } from './PlaceCard';
 import { Nullable } from 'vitest';
 
 type GenericCardListProps = {
@@ -14,11 +14,11 @@ type GenericCardListProps = {
 export function CardList({ offers, onItemHover, ...props }: GenericCardListProps) {
 
   return offers.map((offer) => (
-    <PlaceCard
+    <MemoPlaceCard
       key={offer.id}
       offer={offer}
       {...props}
-      onHover={(id) => onItemHover?.call(null, id)}
+      onHover={onItemHover}
     />
   ));
 }
