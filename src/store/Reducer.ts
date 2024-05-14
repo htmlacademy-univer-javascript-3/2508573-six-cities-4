@@ -6,10 +6,12 @@ import {
   changeSortingOrderAction,
   fillOrdersAction,
   setOrdersLoadingStatusAction,
+  setUserAction,
 } from './Actions';
 import { SortingOrder } from '../entities/SortingOrder';
 import { Offer } from '../entities/Offer';
 import { AuthorizationStatus } from '../Constants';
+import { User } from '../entities/User';
 
 const initialState: {
   city: string;
@@ -17,12 +19,13 @@ const initialState: {
   sortingOrder: SortingOrder;
   offersLoadingStatus: boolean;
   authorizationStatus: AuthorizationStatus;
+  user?: User;
 } = {
   city: Cities[0].name,
   offers: [],
   sortingOrder: 'Popular',
   offersLoadingStatus: false,
-  authorizationStatus: AuthorizationStatus.Unknown
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -41,5 +44,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeAuthStatusAction, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserAction, (state, action) => {
+      state.user = action.payload;
     });
 });

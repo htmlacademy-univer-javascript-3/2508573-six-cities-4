@@ -2,6 +2,7 @@
 import { SortingOrder } from '../entities/SortingOrder';
 import { Offer } from '../entities/Offer';
 import { AuthorizationStatus } from '../Constants';
+import { User } from '../entities/User';
 
 export const changeCityAction = createAction<string>('CHANGE_CITY');
 
@@ -12,3 +13,5 @@ export const setOrdersLoadingStatusAction = createAction<boolean>('SET_OFFERS_LO
 export const changeSortingOrderAction = createAction<SortingOrder>('CHANGE_SORT_ORDER');
 
 export const changeAuthStatusAction = createAction<AuthorizationStatus>('CHANGE_AUTH_STATUS');
+
+export const setUserAction = createAction<User>('SET_USER');
