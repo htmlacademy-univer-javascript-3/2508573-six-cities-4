@@ -7,7 +7,9 @@ import { User } from '../entities/User';
 import { AuthData } from '../entities/AuthData';
 import { dropToken, saveToken } from '../services/token';
 import { setUser, changeAuthStatus } from './slices/AuthSlice';
-import { fillOrders, setOrdersLoadingStatus } from './slices/OffersSlice';
+import { changeFavoriteStatus, fillFavorites, fillOrders, setOrdersLoadingStatus } from './slices/OffersSlice';
+import { FavoriteData } from '../entities/FavoriteData';
+import { buildUrl } from '../services/apiUtils';
 
 export const fetchOrdersAction = createAsyncThunk<
   void,
@@ -22,6 +24,19 @@ export const fetchOrdersAction = createAsyncThunk<
   const { data } = await api.get<Offer[]>(ApiRoutes.Offers);
   dispatch(setOrdersLoadingStatus(false));
   dispatch(fillOrders(data));
+});
+
+export const fetchFavoritesAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('FETCH_FAVORITES', async (_arg, { dispatch, extra: api }) => {
+  const { data } = await api.get<Offer[]>(ApiRoutes.Favorite);
+  dispatch(fillFavorites(data));
 });
 
 export const checkAuthAction = createAsyncThunk<
@@ -51,7 +66,7 @@ export const loginAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >(
-  'user/login',
+  'LOGIN',
   async ({ login: email, password }, { dispatch, extra: api }) => {
     const user = (await api.post<User>(ApiRoutes.Login, { email, password }))
       .data;
@@ -69,8 +84,27 @@ export const logoutAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('user/logout', async (_arg, { dispatch, extra: api }) => {
+>('LOGOUT', async (_arg, { dispatch, extra: api }) => {
   await api.delete(ApiRoutes.Logout);
   dropToken();
   dispatch(changeAuthStatus(AuthorizationStatus.NoAuth));
+});
+
+export const changeFavoriteStatusAction = createAsyncThunk<
+  void,
+  FavoriteData,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('CHANGE_FAVORITE_STATUS', async ({ offerId, isFavorite }, { dispatch, extra: api }) => {
+  await api.post<Offer>(
+    buildUrl(ApiRoutes.FavoriteStatus, {
+      offerId: offerId,
+      status: Number(isFavorite).toString(),
+    })
+  );
+  dispatch(fetchFavoritesAction());
+  dispatch(changeFavoriteStatus({ offerId, isFavorite }));
 });

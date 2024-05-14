@@ -52,7 +52,7 @@ export function OfferPage({ offer, reviews, nearbyOffers, authStatus }: OfferPag
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offer.title}</h1>
-                <OfferBookmarkButton isFavorite={offer.isFavorite} />
+                <OfferBookmarkButton offerId={offer.id} isFavorite={offer.isFavorite} />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

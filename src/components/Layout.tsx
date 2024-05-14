@@ -11,6 +11,9 @@ export default function Layout() {
   });
   const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
   const user = useAppSelector((state) => state.auth.user);
+  const favoriteCount = useAppSelector(
+    (state) => state.offers.favorites.length
+  );
 
   return (
     <div className={pageClasses}>
@@ -44,11 +47,14 @@ export default function Layout() {
                         <span className="header__user-name user__name">
                           {user.email}
                         </span>
-                        <span className="header__favorite-count">3</span>
+                        <span className="header__favorite-count">
+                          {favoriteCount}
+                        </span>
                       </Link>
                     </li>
                     <li className="header__nav-item">
-                      <Link to={'#'} className="header__nav-link"> {/* TODO: log out */}
+                      <Link to={'#'} className="header__nav-link">
+                        {/* TODO: log out */}
                         <span className="header__signout">Sign out</span>
                       </Link>
                     </li>
