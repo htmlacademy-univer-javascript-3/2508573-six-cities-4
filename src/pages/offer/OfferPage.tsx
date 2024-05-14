@@ -19,12 +19,12 @@ type OfferPageProps = {
 };
 
 export function OfferPage({ offer, reviews, nearbyOffers, authStatus }: OfferPageProps) {
-  const offerLocation = { name: offer.id, point: offer.location };
+  const offerLocation = { name: offer.id, location: offer.location };
   const displayedOffers = nearbyOffers
     .filter((o) => o.id !== offer.id)
     .slice(0, 3);
   const nearbyPoints = displayedOffers
-    .map((o) => ({ name: o.id, point: o.location }))
+    .map((o) => ({ name: o.id, location: o.location }))
     .concat(offerLocation);
 
   return (
@@ -100,7 +100,7 @@ export function OfferPage({ offer, reviews, nearbyOffers, authStatus }: OfferPag
             <Map
               city={{
                 ...offerLocation,
-                location: { ...offerLocation.point, zoom: DEFAULT_MAP_ZOOM },
+                location: { ...offerLocation.location, zoom: DEFAULT_MAP_ZOOM },
               }}
               points={nearbyPoints}
               selected={offerLocation}
