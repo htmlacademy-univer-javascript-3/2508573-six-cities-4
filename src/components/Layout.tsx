@@ -1,6 +1,7 @@
 ﻿import cn from 'classnames';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { AppRoutes } from '../Constants';
+import { AppRoutes, AuthorizationStatus } from '../Constants';
+import { useAppSelector } from '../store/hooks';
 
 export default function Layout() {
   const location = useLocation();
@@ -8,6 +9,8 @@ export default function Layout() {
     'page--gray page--main': location.pathname === AppRoutes.Main,
     'page--gray page--login': location.pathname === AppRoutes.Login,
   });
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const user = useAppSelector((state) => state.user);
 
   return (
     <div className={pageClasses}>
@@ -30,23 +33,37 @@ export default function Layout() {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link
-                    to={AppRoutes.Favorites}
-                    className="header__nav-link header__nav-link--profile"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link to={'#'} className="header__nav-link">
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
+                {authStatus === AuthorizationStatus.Auth && user ? (
+                  <>
+                    <li className="header__nav-item user">
+                      <Link
+                        to={AppRoutes.Favorites}
+                        className="header__nav-link header__nav-link--profile"
+                      >
+                        <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                        <span className="header__user-name user__name">
+                          {user.email}
+                        </span>
+                        <span className="header__favorite-count">3</span>
+                      </Link>
+                    </li>
+                    <li className="header__nav-item">
+                      <Link to={'#'} className="header__nav-link"> {/* TODO: log out */}
+                        <span className="header__signout">Sign out</span>
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <li className="header__nav-item user">
+                    <Link
+                      className="header__nav-link header__nav-link--profile"
+                      to={AppRoutes.Login}
+                    >
+                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <span className="header__login">Sign in</span>
+                    </Link>
+                  </li>
+                )}
               </ul>
             </nav>
           </div>
