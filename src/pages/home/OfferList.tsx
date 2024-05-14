@@ -5,8 +5,6 @@ import Map from '../../components/map/Map';
 import { Offer } from '../../entities/Offer';
 import { Location } from '../../entities/Location';
 import { SortingOrderList } from '../../components/sorting-order/SortingOrderList';
-import { useAppSelector } from '../../store/hooks';
-import { sortingOrders } from '../../entities/SortingOrder';
 
 type OfferListProps = {
   offers: Offer[];
@@ -15,8 +13,6 @@ type OfferListProps = {
 
 export function OfferList({ offers, city }: OfferListProps) {
   const [selectedId, setSelectedId] = useState<Nullable<string>>();
-  const order = useAppSelector((state) => state.sortingOrder);
-  offers = offers.sort(sortingOrders[order]);
 
   const points = offers.map((o) => ({ name: o.id, location: o.location }));
 

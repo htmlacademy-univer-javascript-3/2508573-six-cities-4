@@ -9,8 +9,8 @@ export default function Layout() {
     'page--gray page--main': location.pathname === AppRoutes.Main,
     'page--gray page--login': location.pathname === AppRoutes.Login,
   });
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const user = useAppSelector((state) => state.user);
+  const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
+  const user = useAppSelector((state) => state.auth.user);
 
   return (
     <div className={pageClasses}>
