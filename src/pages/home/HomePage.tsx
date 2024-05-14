@@ -1,6 +1,6 @@
 ﻿import { Helmet } from 'react-helmet-async';
 import Tabs from '../../components/tabs/Tabs';
-import { useAppDispatch, useAppSelector } from '../../store/Hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { changeCityAction } from '../../store/Actions';
 import cn from 'classnames';
 import { OfferList, EmptyOfferList } from './OfferList';
