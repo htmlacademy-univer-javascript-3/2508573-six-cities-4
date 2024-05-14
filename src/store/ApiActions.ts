@@ -105,6 +105,5 @@ export const changeFavoriteStatusAction = createAsyncThunk<
       status: Number(isFavorite).toString(),
     })
   );
-  dispatch(fetchFavoritesAction());
   dispatch(changeFavoriteStatus({ offerId, isFavorite }));
 });

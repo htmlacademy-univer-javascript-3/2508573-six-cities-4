@@ -1,4 +1,5 @@
-﻿import { FavoritesCardList } from '../../components/cards/CardList';
+﻿import { useMemo } from 'react';
+import { FavoritesCardList } from '../../components/cards/CardList';
 import LocationHeader from '../../components/locations/LocationHeader';
 import { Offer } from '../../entities/Offer';
 
@@ -7,7 +8,10 @@ type FavoritesListProps = {
 };
 
 export default function FavoritesList({ offers }: FavoritesListProps) {
-  const cities = Array.from(new Set(offers.map((x) => x.city.name).toSorted()));
+  const cities = useMemo(
+    () => Array.from(new Set(offers.map((x) => x.city.name).toSorted())),
+    [offers]
+  );
 
   return (
     <ul className="favorites__list">

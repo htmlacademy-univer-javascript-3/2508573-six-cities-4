@@ -35,6 +35,11 @@ export const offersSlice = createSlice({
       const offer = state.offers.find((x) => x.id === offerId);
       if (offer) {
         offer.isFavorite = isFavorite;
+        if (isFavorite && !state.favorites.find((x) => x.id === offerId)) {
+          state.favorites.push(offer);
+        } else {
+          state.favorites = state.favorites.filter((x) => x.id !== offerId);
+        }
       }
     },
     fillFavorites(state, action: PayloadAction<Offer[]>) {
