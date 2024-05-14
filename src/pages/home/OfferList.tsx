@@ -5,7 +5,7 @@ import Map from '../../components/map/Map';
 import { Offer } from '../../entities/Offer';
 import { Location } from '../../entities/Location';
 import { SortingOrderList } from '../../components/sorting-order/SortingOrderList';
-import { useAppSelector } from '../../store/Hooks';
+import { useAppSelector } from '../../store/hooks';
 import { sortingOrders } from '../../entities/SortingOrder';
 
 type OfferListProps = {
