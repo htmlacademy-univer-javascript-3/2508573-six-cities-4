@@ -38,7 +38,7 @@ export function App({ offers, reviews }: AppProps) {
                 }
               />
               <Route
-                element={<PrivateRoute authStatus={AuthorizationStatus.Auth} />}
+                element={<PrivateRoute />}
               >
                 <Route
                   path={AppRoutes.Favorites}

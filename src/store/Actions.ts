@@ -1,31 +1,17 @@
 ﻿import { createAction } from '@reduxjs/toolkit';
 import { SortingOrder } from '../entities/SortingOrder';
 import { Offer } from '../entities/Offer';
+import { AuthorizationStatus } from '../Constants';
+import { User } from '../entities/User';
 
-export const changeCityAction = createAction(
-  'CHANGE_CITY',
-  (value: string) => ({
-    payload: value,
-  })
-);
+export const changeCityAction = createAction<string>('CHANGE_CITY');
 
-export const fillOrdersAction = createAction(
-  'FILL_ORDERS',
-  (value: Offer[]) => ({
-    payload: value,
-  })
-);
+export const fillOrdersAction = createAction<Offer[]>('FILL_ORDERS');
 
-export const setOrdersLoadingStatusAction = createAction(
-  'SET_OFFERS_LOADING',
-  (value: boolean) => ({
-    payload: value,
-  })
-);
+export const setOrdersLoadingStatusAction = createAction<boolean>('SET_OFFERS_LOADING');
 
-export const changeSortingOrderAction = createAction(
-  'CHANGE_SORT_ORDER',
-  (value: SortingOrder) => ({
-    payload: value,
-  })
-);
+export const changeSortingOrderAction = createAction<SortingOrder>('CHANGE_SORT_ORDER');
+
+export const changeAuthStatusAction = createAction<AuthorizationStatus>('CHANGE_AUTH_STATUS');
+
+export const setUserAction = createAction<User>('SET_USER');
