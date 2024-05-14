@@ -7,7 +7,12 @@ import { User } from '../entities/User';
 import { AuthData } from '../entities/AuthData';
 import { dropToken, saveToken } from '../services/token';
 import { setUser, changeAuthStatus } from './slices/AuthSlice';
-import { changeFavoriteStatus, fillFavorites, fillOrders, setOrdersLoadingStatus } from './slices/OffersSlice';
+import {
+  changeFavoriteStatus,
+  fillFavorites,
+  fillOrders,
+  setOrdersLoadingStatus,
+} from './slices/OffersSlice';
 import { FavoriteData } from '../entities/FavoriteData';
 import { buildUrl } from '../services/apiUtils';
 
@@ -34,7 +39,10 @@ export const fetchFavoritesAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('FETCH_FAVORITES', async (_arg, { dispatch, extra: api }) => {
+>('FETCH_FAVORITES', async (_arg, { dispatch, getState, rejectWithValue, extra: api }) => {
+  if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
+    return rejectWithValue('Unauthorized');
+  }
   const { data } = await api.get<Offer[]>(ApiRoutes.Favorite);
   dispatch(fillFavorites(data));
 });
@@ -65,16 +73,13 @@ export const loginAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->(
-  'LOGIN',
-  async ({ login: email, password }, { dispatch, extra: api }) => {
-    const user = (await api.post<User>(ApiRoutes.Login, { email, password }))
-      .data;
-    dispatch(setUser(user));
-    saveToken(user.token);
-    dispatch(changeAuthStatus(AuthorizationStatus.Auth));
-  }
-);
+>('LOGIN', async ({ login: email, password }, { dispatch, extra: api }) => {
+  const {data: user} = await api.post<User>(ApiRoutes.Login, { email, password });
+  dispatch(setUser(user));
+  saveToken(user.token);
+  dispatch(changeAuthStatus(AuthorizationStatus.Auth));
+  dispatch(fetchFavoritesAction());
+});
 
 export const logoutAction = createAsyncThunk<
   void,
@@ -88,6 +93,7 @@ export const logoutAction = createAsyncThunk<
   await api.delete(ApiRoutes.Logout);
   dropToken();
   dispatch(changeAuthStatus(AuthorizationStatus.NoAuth));
+  dispatch(setUser(null));
 });
 
 export const changeFavoriteStatusAction = createAsyncThunk<
@@ -98,12 +104,18 @@ export const changeFavoriteStatusAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('CHANGE_FAVORITE_STATUS', async ({ offerId, isFavorite }, { dispatch, extra: api }) => {
-  await api.post<Offer>(
-    buildUrl(ApiRoutes.FavoriteStatus, {
-      offerId: offerId,
-      status: Number(isFavorite).toString(),
-    })
-  );
-  dispatch(changeFavoriteStatus({ offerId, isFavorite }));
-});
+>(
+  'CHANGE_FAVORITE_STATUS',
+  async ({ offerId, isFavorite }, { dispatch, getState, rejectWithValue, extra: api }) => {
+    if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
+      return rejectWithValue('Unauthorized');
+    }
+    await api.post<Offer>(
+      buildUrl(ApiRoutes.FavoriteStatus, {
+        offerId: offerId,
+        status: Number(isFavorite).toString(),
+      })
+    );
+    dispatch(changeFavoriteStatus({ offerId, isFavorite }));
+  }
+);

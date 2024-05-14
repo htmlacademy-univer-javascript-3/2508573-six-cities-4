@@ -13,13 +13,9 @@ function BookmarkButton({ offerId, isFavorite, type }: BookmarkButtonProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const addToFavorites = () => {
-    try {
-      dispatch(
-        changeFavoriteStatusAction({ offerId, isFavorite: !isFavorite })
-      );
-    } catch {
-      navigate(AppRoutes.Login);
-    }
+    dispatch(changeFavoriteStatusAction({ offerId, isFavorite: !isFavorite }))
+      .unwrap()
+      .catch(() => navigate(AppRoutes.Login));
   };
 
   const buttonDesc = isFavorite ? 'In bookmarks' : 'To bookmarks';

@@ -6,8 +6,8 @@ import { store } from './store/Index';
 import { checkAuthAction, fetchFavoritesAction, fetchOrdersAction } from './store/ApiActions';
 
 store.dispatch(fetchOrdersAction());
-store.dispatch(checkAuthAction());
-store.dispatch(fetchFavoritesAction());
+await store.dispatch(checkAuthAction());
+await store.dispatch(fetchFavoritesAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

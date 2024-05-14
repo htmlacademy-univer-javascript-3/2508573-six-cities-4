@@ -1,10 +1,13 @@
 ﻿import cn from 'classnames';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { AppRoutes, AuthorizationStatus } from '../Constants';
-import { useAppSelector } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { logoutAction } from '../store/ApiActions';
 
 export default function Layout() {
   const location = useLocation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const pageClasses = cn('page', {
     'page--gray page--main': location.pathname === AppRoutes.Main,
     'page--gray page--login': location.pathname === AppRoutes.Login,
@@ -14,6 +17,11 @@ export default function Layout() {
   const favoriteCount = useAppSelector(
     (state) => state.offers.favorites.length
   );
+
+  const logOut = () => {
+    dispatch(logoutAction());
+    navigate(AppRoutes.Main);
+  };
 
   return (
     <div className={pageClasses}>
@@ -53,8 +61,7 @@ export default function Layout() {
                       </Link>
                     </li>
                     <li className="header__nav-item">
-                      <Link to={'#'} className="header__nav-link">
-                        {/* TODO: log out */}
+                      <Link to={AppRoutes.Main} onClick={logOut} className="header__nav-link">
                         <span className="header__signout">Sign out</span>
                       </Link>
                     </li>
