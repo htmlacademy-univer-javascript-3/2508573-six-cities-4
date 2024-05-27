@@ -1,8 +1,9 @@
 ﻿import cn from 'classnames';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { AppRoutes, AuthorizationStatus } from '../Constants';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { logoutAction } from '../store/ApiActions';
+import { AppRoutes, AuthorizationStatus } from '../../Constants';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { logoutAction } from '../../store/ApiActions';
+import ErrorMessages from '../errors/ErrorMessages';
 
 export default function Layout() {
   const location = useLocation();
@@ -61,7 +62,11 @@ export default function Layout() {
                       </Link>
                     </li>
                     <li className="header__nav-item">
-                      <Link to={AppRoutes.Main} onClick={logOut} className="header__nav-link">
+                      <Link
+                        to={AppRoutes.Main}
+                        onClick={logOut}
+                        className="header__nav-link"
+                      >
                         <span className="header__signout">Sign out</span>
                       </Link>
                     </li>
@@ -83,6 +88,7 @@ export default function Layout() {
         </div>
       </header>
       <Outlet />
+      <ErrorMessages />
     </div>
   );
 }

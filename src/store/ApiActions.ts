@@ -15,7 +15,12 @@ import {
 } from './slices/OffersSlice';
 import { FavoriteData } from '../entities/FavoriteData';
 import { buildUrl } from '../services/apiUtils';
-import { addReview, fillNearbyOffers, fillReviews, updateOffer } from './slices/CurrentOfferSlice';
+import {
+  addReview,
+  fillNearbyOffers,
+  fillReviews,
+  updateOffer,
+} from './slices/CurrentOfferSlice';
 import { Review } from '../entities/Review';
 import { ReviewData } from '../entities/ReviewData';
 
@@ -42,13 +47,16 @@ export const fetchFavoritesAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('FETCH_FAVORITES', async (_arg, { dispatch, getState, rejectWithValue, extra: api }) => {
-  if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
-    return rejectWithValue('Unauthorized');
+>(
+  'FETCH_FAVORITES',
+  async (_arg, { dispatch, getState, rejectWithValue, extra: api }) => {
+    if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
+      return rejectWithValue('Unauthorized');
+    }
+    const { data } = await api.get<Offer[]>(ApiRoutes.Favorite);
+    dispatch(fillFavorites(data));
   }
-  const { data } = await api.get<Offer[]>(ApiRoutes.Favorite);
-  dispatch(fillFavorites(data));
-});
+);
 
 export const checkAuthAction = createAsyncThunk<
   void,
@@ -77,7 +85,10 @@ export const loginAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('LOGIN', async ({ login: email, password }, { dispatch, extra: api }) => {
-  const {data: user} = await api.post<User>(ApiRoutes.Login, { email, password });
+  const { data: user } = await api.post<User>(ApiRoutes.Login, {
+    email,
+    password,
+  });
   dispatch(setUser(user));
   saveToken(user.token);
   dispatch(changeAuthStatus(AuthorizationStatus.Auth));
@@ -109,7 +120,10 @@ export const changeFavoriteStatusAction = createAsyncThunk<
   }
 >(
   'CHANGE_FAVORITE_STATUS',
-  async ({ offerId, isFavorite }, { dispatch, getState, rejectWithValue, extra: api }) => {
+  async (
+    { offerId, isFavorite },
+    { dispatch, getState, rejectWithValue, extra: api }
+  ) => {
     if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
       return rejectWithValue('Unauthorized');
     }
@@ -131,23 +145,20 @@ export const fetchOffer = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->(
-  'FETCH_OFFER',
-  async (offerId, { dispatch, extra: api }) => {
-    const { data: newOffer } = await api.get<Offer>(
-      buildUrl(ApiRoutes.Offer, { offerId })
-    );
-    dispatch(updateOffer(newOffer));
-    const { data: newReviews } = await api.get<Review[]>(
-      buildUrl(ApiRoutes.Comments, { offerId })
-    );
-    dispatch(fillReviews(newReviews));
-    const { data: newNearbyOffers } = await api.get<Offer[]>(
-      buildUrl(ApiRoutes.OffersNearby, { offerId })
-    );
-    dispatch(fillNearbyOffers(newNearbyOffers));
-  }
-);
+>('FETCH_OFFER', async (offerId, { dispatch, extra: api }) => {
+  const { data: newOffer } = await api.get<Offer>(
+    buildUrl(ApiRoutes.Offer, { offerId })
+  );
+  dispatch(updateOffer(newOffer));
+  const { data: newReviews } = await api.get<Review[]>(
+    buildUrl(ApiRoutes.Comments, { offerId })
+  );
+  dispatch(fillReviews(newReviews));
+  const { data: newNearbyOffers } = await api.get<Offer[]>(
+    buildUrl(ApiRoutes.OffersNearby, { offerId })
+  );
+  dispatch(fillNearbyOffers(newNearbyOffers));
+});
 
 export const sendReview = createAsyncThunk<
   void,
@@ -159,11 +170,17 @@ export const sendReview = createAsyncThunk<
   }
 >(
   'SEND_REVIEW',
-  async ({ offerId, formData }, { dispatch, getState, rejectWithValue, extra: api }) => {
+  async (
+    { offerId, formData },
+    { dispatch, getState, rejectWithValue, extra: api }
+  ) => {
     if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
       return rejectWithValue('Unauthorized');
     }
-    const { data: review } = await api.post<Review>(buildUrl(ApiRoutes.Comments, { offerId }), formData);
+    const { data: review } = await api.post<Review>(
+      buildUrl(ApiRoutes.Comments, { offerId }),
+      formData
+    );
     dispatch(addReview(review));
   }
 );

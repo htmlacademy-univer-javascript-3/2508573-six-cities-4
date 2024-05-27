@@ -1,6 +1,7 @@
-﻿import { createRef, FormEvent, useState } from 'react';
+﻿import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { sendReview } from '../../../store/ApiActions';
+import { addErrorMessage } from '../../../store/slices/ErrorsSlice';
 
 export default function ReviewForm() {
   const [formData, setFormData] = useState({
@@ -10,7 +11,6 @@ export default function ReviewForm() {
   });
   const offerId = useAppSelector((state) => state.currentOffer.offer?.id);
   const dispatch = useAppDispatch();
-  const formRef = createRef<HTMLFormElement>();
 
   const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -36,19 +36,16 @@ export default function ReviewForm() {
     )
       .unwrap()
       .then(() => {
-        setFormData({ ...formData, rating: 0, comment: '' });
-        formRef.current?.reset();
+        setFormData({ rating: 0, comment: '', disabled: false });
       })
-      .catch(() => {})
-      .finally(() => setFormData({ ...formData, disabled: false }));
+      .catch(() => {
+        dispatch(addErrorMessage('Error orrured while sending review'));
+        setFormData({ ...formData, disabled: false });
+      });
   };
 
   return (
-    <form
-      className="reviews__form form"
-      onSubmit={onSubmit}
-      ref={formRef}
-    >
+    <form className="reviews__form form" onSubmit={onSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -59,6 +56,7 @@ export default function ReviewForm() {
           value={5}
           id="5-stars"
           type="radio"
+          checked={formData.rating === 5}
           onChange={handleRatingChange}
         />
         <label
@@ -76,6 +74,7 @@ export default function ReviewForm() {
           value={4}
           id="4-stars"
           type="radio"
+          checked={formData.rating === 4}
           onChange={handleRatingChange}
         />
         <label
@@ -93,6 +92,7 @@ export default function ReviewForm() {
           value={3}
           id="3-stars"
           type="radio"
+          checked={formData.rating === 3}
           onChange={handleRatingChange}
         />
         <label
@@ -110,6 +110,7 @@ export default function ReviewForm() {
           value={2}
           id="2-stars"
           type="radio"
+          checked={formData.rating === 2}
           onChange={handleRatingChange}
         />
         <label
@@ -127,6 +128,7 @@ export default function ReviewForm() {
           value={1}
           id="1-star"
           type="radio"
+          checked={formData.rating === 1}
           onChange={handleRatingChange}
         />
         <label
