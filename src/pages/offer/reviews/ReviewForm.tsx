@@ -1,28 +1,54 @@
-﻿import { useState } from 'react';
+﻿import { createRef, FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { sendReview } from '../../../store/ApiActions';
 
 export default function ReviewForm() {
-  const [formData, setFormData] = useState({ rating: 0, comment: '' });
+  const [formData, setFormData] = useState({
+    rating: 0,
+    comment: '',
+    disabled: false,
+  });
   const offerId = useAppSelector((state) => state.currentOffer.offer?.id);
   const dispatch = useAppDispatch();
+  const formRef = createRef<HTMLFormElement>();
 
-  const handleRatingChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.currentTarget;
-    setFormData({ ...formData, [name]: value });
+  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setFormData({ ...formData, rating: Number(value) });
   };
 
-  const onSubmit = () => {
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    setFormData({ ...formData, comment: value });
+  };
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (offerId === undefined) {
       return;
     }
-    dispatch(sendReview({ offerId, formData }));
+    setFormData({ ...formData, disabled: true });
+    dispatch(
+      sendReview({
+        offerId,
+        formData: { comment: formData.comment, rating: formData.rating },
+      })
+    )
+      .unwrap()
+      .then(() => {
+        setFormData({ ...formData, rating: 0, comment: '' });
+        formRef.current?.reset();
+      })
+      .catch(() => {})
+      .finally(() => setFormData({ ...formData, disabled: false }));
   };
 
   return (
-    <form className="reviews__form form" onSubmit={onSubmit}>
+    <form
+      className="reviews__form form"
+      onSubmit={onSubmit}
+      ref={formRef}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -30,7 +56,7 @@ export default function ReviewForm() {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={5}
+          value={5}
           id="5-stars"
           type="radio"
           onChange={handleRatingChange}
@@ -46,8 +72,8 @@ export default function ReviewForm() {
         </label>
         <input
           className="form__rating-input visually-hidden"
-          name="comment"
-          defaultValue={4}
+          name="rating"
+          value={4}
           id="4-stars"
           type="radio"
           onChange={handleRatingChange}
@@ -64,7 +90,7 @@ export default function ReviewForm() {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={3}
+          value={3}
           id="3-stars"
           type="radio"
           onChange={handleRatingChange}
@@ -81,7 +107,7 @@ export default function ReviewForm() {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={2}
+          value={2}
           id="2-stars"
           type="radio"
           onChange={handleRatingChange}
@@ -98,7 +124,7 @@ export default function ReviewForm() {
         <input
           className="form__rating-input visually-hidden"
           name="rating"
-          defaultValue={1}
+          value={1}
           id="1-star"
           type="radio"
           onChange={handleRatingChange}
@@ -116,10 +142,13 @@ export default function ReviewForm() {
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.comment}
-        onChange={handleRatingChange}
+        maxLength={300}
+        minLength={50}
+        onChange={handleCommentChange}
+        disabled={formData.disabled}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -130,7 +159,12 @@ export default function ReviewForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={
+            formData.disabled ||
+            formData.comment.length > 300 ||
+            formData.comment.length < 50 ||
+            formData.rating === 0
+          }
         >
           Submit
         </button>
