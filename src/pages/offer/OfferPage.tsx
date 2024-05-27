@@ -1,24 +1,47 @@
 ﻿import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../entities/Offer';
 import { OfferBookmarkButton } from '../../components/cards/BookmarkButton';
 import OfferGoods from './OfferGoods';
 import { OfferUserAvatar } from '../../components/user/UserAvatar';
-import { Review } from '../../entities/Review';
 import ReviewList from './reviews/ReviewList';
 import ReviewForm from './reviews/ReviewForm';
 import Map from '../../components/map/Map';
-import { AuthorizationStatus, DEFAULT_MAP_ZOOM } from '../../Constants';
+import {
+  AppRoutes,
+  AuthorizationStatus,
+  DEFAULT_MAP_ZOOM,
+} from '../../Constants';
 import styles from './OfferPage.module.css';
 import { NearbyCardList } from '../../components/cards/CardList';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useOfferPage } from './UseOfferPage';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Spinner } from '../../components/spinner/Spinner';
+import { clearOffer } from '../../store/slices/CurrentOfferSlice';
 
-type OfferPageProps = {
-  offer: Offer;
-  reviews: Review[];
-  nearbyOffers: Offer[];
-  authStatus: AuthorizationStatus;
-};
+export function OfferPage() {
+  const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
+  const { offer, reviews, nearbyOffers, error, isLoading } = useOfferPage();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-export function OfferPage({ offer, reviews, nearbyOffers, authStatus }: OfferPageProps) {
+  useEffect(() => {
+    if (error !== undefined || (!isLoading && offer === undefined)) {
+      navigate(AppRoutes.NotFound);
+    }
+  }, [error, navigate, offer, isLoading]);
+
+  useEffect(
+    () => () => {
+      dispatch(clearOffer());
+    },
+    [dispatch]
+  );
+
+  if (isLoading || offer === undefined) {
+    return <Spinner />;
+  }
+
   const offerLocation = { name: offer.id, location: offer.location };
   const displayedOffers = nearbyOffers
     .filter((o) => o.id !== offer.id)
@@ -52,7 +75,10 @@ export function OfferPage({ offer, reviews, nearbyOffers, authStatus }: OfferPag
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offer.title}</h1>
-                <OfferBookmarkButton offerId={offer.id} isFavorite={offer.isFavorite} />
+                <OfferBookmarkButton
+                  offerId={offer.id}
+                  isFavorite={offer.isFavorite}
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

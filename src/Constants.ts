@@ -3,8 +3,9 @@
 export const AppRoutes = {
   Main: '/',
   Login: '/login',
-  Offer: '/offer/:id',
+  Offer: '/offer/:offerId',
   Favorites: '/favorites',
+  NotFound: '/*'
 };
 
 export enum ApiRoutes {

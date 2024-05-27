@@ -31,7 +31,7 @@ export const offersSlice = createSlice({
       state.sortingOrder = action.payload;
     },
     changeFavoriteStatus(state, action: PayloadAction<FavoriteData>) {
-      const { offerId, isFavorite} = action.payload;
+      const { offerId, isFavorite } = action.payload;
       const offer = state.offers.find((x) => x.id === offerId);
       if (offer) {
         offer.isFavorite = isFavorite;
@@ -44,7 +44,7 @@ export const offersSlice = createSlice({
     },
     fillFavorites(state, action: PayloadAction<Offer[]>) {
       state.favorites = action.payload;
-    }
+    },
   },
 });
 
