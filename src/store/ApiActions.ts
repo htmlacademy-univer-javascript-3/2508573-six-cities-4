@@ -15,6 +15,8 @@ import {
 } from './slices/OffersSlice';
 import { FavoriteData } from '../entities/FavoriteData';
 import { buildUrl } from '../services/apiUtils';
+import { fillNearbyOffers, fillReviews, updateOffer } from './slices/CurrentOfferSlice';
+import { Review } from '../entities/Review';
 
 export const fetchOrdersAction = createAsyncThunk<
   void,
@@ -117,5 +119,31 @@ export const changeFavoriteStatusAction = createAsyncThunk<
       })
     );
     dispatch(changeFavoriteStatus({ offerId, isFavorite }));
+  }
+);
+
+export const fetchOffer = createAsyncThunk<
+  void,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>(
+  'FETCH_OFFER',
+  async (offerId, { dispatch, extra: api }) => {
+    const { data: newOffer } = await api.get<Offer>(
+      buildUrl(ApiRoutes.Offer, { offerId })
+    );
+    dispatch(updateOffer(newOffer));
+    const { data: newReviews } = await api.get<Review[]>(
+      buildUrl(ApiRoutes.Comments, { offerId })
+    );
+    dispatch(fillReviews(newReviews));
+    const { data: newNearbyOffers } = await api.get<Offer[]>(
+      buildUrl(ApiRoutes.OffersNearby, { offerId })
+    );
+    dispatch(fillNearbyOffers(newNearbyOffers));
   }
 );

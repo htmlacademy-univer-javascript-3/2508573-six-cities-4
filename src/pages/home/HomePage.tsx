@@ -3,9 +3,9 @@ import Tabs from '../../components/tabs/Tabs';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import cn from 'classnames';
 import { OfferList, EmptyOfferList } from './OfferList';
-import styles from './HomePage.module.css';
 import { cityOffersSelector } from '../../store/Selectors';
 import { changeCity } from '../../store/slices/CitySlice';
+import { Spinner } from '../../components/spinner/Spinner';
 
 export function HomePage() {
   const city = useAppSelector((state) => state.city.city);
@@ -32,7 +32,7 @@ export function HomePage() {
         />
         <div className="cities">
           {isLoading ? (
-            <div className={styles['cities__places-loading']} />
+            <Spinner />
           ) : (
             <div
               className={cn('cities__places-container', 'container', {

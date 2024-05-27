@@ -1,6 +1,6 @@
 ﻿import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { HomePage } from './pages/home/HomePage';
-import { AppRoutes, AuthorizationStatus } from './Constants';
+import { AppRoutes } from './Constants';
 import { OfferPage } from './pages/offer/OfferPage';
 import { LoginPage } from './pages/login/LoginPage';
 import { FavouritesPage } from './pages/favourites/FavouritesPage';
@@ -8,17 +8,10 @@ import Layout from './components/Layout';
 import NotFoundPage from './pages/notfound/NotFoundPage';
 import PrivateRoute from './components/routes/PrivateRoute';
 import { HelmetProvider } from 'react-helmet-async';
-import { Offer } from './entities/Offer';
-import { Review } from './entities/Review';
 import { Provider } from 'react-redux';
 import { store } from './store/Index';
 
-type AppProps = {
-  offers: Offer[];
-  reviews: Review[];
-};
-
-export function App({ offers, reviews }: AppProps) {
+export function App() {
   return (
     <Provider store={store}>
       <HelmetProvider>
@@ -26,17 +19,7 @@ export function App({ offers, reviews }: AppProps) {
           <Routes>
             <Route element={<Layout />}>
               <Route index path={AppRoutes.Main} element={<HomePage />} />
-              <Route
-                path={AppRoutes.Offer}
-                element={
-                  <OfferPage
-                    offer={offers[0]}
-                    reviews={reviews}
-                    nearbyOffers={offers}
-                    authStatus={AuthorizationStatus.Auth}
-                  />
-                }
-              />
+              <Route path={AppRoutes.Offer} element={<OfferPage />} />
               <Route element={<PrivateRoute />}>
                 <Route
                   path={AppRoutes.Favorites}
@@ -44,7 +27,7 @@ export function App({ offers, reviews }: AppProps) {
                 />
               </Route>
               <Route path={AppRoutes.Login} element={<LoginPage />} />
-              <Route path="*" element={<NotFoundPage />} />
+              <Route path={AppRoutes.NotFound} element={<NotFoundPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
