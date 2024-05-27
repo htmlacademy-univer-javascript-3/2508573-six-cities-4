@@ -9,15 +9,18 @@ export default function Layout() {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const pageClasses = cn('page', {
-    'page--gray page--main': location.pathname === AppRoutes.Main,
-    'page--gray page--login': location.pathname === AppRoutes.Login,
-  });
   const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
   const user = useAppSelector((state) => state.auth.user);
   const favoriteCount = useAppSelector(
     (state) => state.offers.favorites.length
   );
+
+  const pageClasses = cn('page', {
+    'page--gray page--main': location.pathname === AppRoutes.Main,
+    'page--gray page--login': location.pathname === AppRoutes.Login,
+    'page--favorites-empty':
+      location.pathname === AppRoutes.Favorites && favoriteCount === 0,
+  });
 
   const logOut = () => {
     dispatch(logoutAction());
