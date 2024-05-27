@@ -1,15 +1,28 @@
 ﻿import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { sendReview } from '../../../store/ApiActions';
 
 export default function ReviewForm() {
-  const [formData, setFormData] = useState({ rating: 0, review: '' });
+  const [formData, setFormData] = useState({ rating: 0, comment: '' });
+  const offerId = useAppSelector((state) => state.currentOffer.offer?.id);
+  const dispatch = useAppDispatch();
 
-  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {name, value} = e.currentTarget;
-    setFormData({...formData, [name]: value});
+  const handleRatingChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.currentTarget;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const onSubmit = () => {
+    if (offerId === undefined) {
+      return;
+    }
+    dispatch(sendReview({ offerId, formData }));
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" onSubmit={onSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -33,7 +46,7 @@ export default function ReviewForm() {
         </label>
         <input
           className="form__rating-input visually-hidden"
-          name="rating"
+          name="comment"
           defaultValue={4}
           id="4-stars"
           type="radio"
@@ -105,7 +118,7 @@ export default function ReviewForm() {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={formData.review}
+        value={formData.comment}
         onChange={handleRatingChange}
       />
       <div className="reviews__button-wrapper">

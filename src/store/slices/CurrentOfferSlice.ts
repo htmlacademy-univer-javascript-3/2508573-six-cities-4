@@ -22,6 +22,9 @@ const currentOfferSlice = createSlice({
     fillReviews(state, action: PayloadAction<Review[]>) {
       state.reviews = action.payload;
     },
+    addReview(state, action: PayloadAction<Review>) {
+      state.reviews.push(action.payload);
+    },
     fillNearbyOffers(state, action: PayloadAction<Offer[]>) {
       state.nearbyOffers = action.payload;
     },
@@ -45,5 +48,5 @@ const currentOfferSlice = createSlice({
   },
 });
 
-export const { fillNearbyOffers, fillReviews, updateOffer, clearOffer } = currentOfferSlice.actions;
+export const { fillNearbyOffers, fillReviews, updateOffer, clearOffer, addReview } = currentOfferSlice.actions;
 export default currentOfferSlice.reducer;
