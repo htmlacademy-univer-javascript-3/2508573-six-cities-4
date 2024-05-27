@@ -12,23 +12,31 @@ import {
 } from '../../Constants';
 import styles from './OfferPage.module.css';
 import { NearbyCardList } from '../../components/cards/CardList';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useOfferPage } from './UseOfferPage';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Spinner } from '../../components/spinner/Spinner';
-
+import { clearOffer } from '../../store/slices/CurrentOfferSlice';
 
 export function OfferPage() {
   const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
   const { offer, reviews, nearbyOffers, error, isLoading } = useOfferPage();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (error !== undefined || (!isLoading && offer === undefined)) {
       navigate(AppRoutes.NotFound);
     }
-  }, [error, navigate, offer]);
+  }, [error, navigate, offer, isLoading]);
+
+  useEffect(
+    () => () => {
+      dispatch(clearOffer());
+    },
+    [dispatch]
+  );
 
   if (isLoading || offer === undefined) {
     return <Spinner />;

@@ -27,6 +27,11 @@ const currentOfferSlice = createSlice({
     },
     updateOffer(state, action: PayloadAction<Offer | undefined>) {
       state.offer = action.payload;
+    },
+    clearOffer(state) {
+      state.offer = undefined;
+      state.nearbyOffers = [];
+      state.reviews = [];
     }
   },
   extraReducers: (builder) => {
@@ -40,5 +45,5 @@ const currentOfferSlice = createSlice({
   },
 });
 
-export const { fillNearbyOffers, fillReviews, updateOffer } = currentOfferSlice.actions;
+export const { fillNearbyOffers, fillReviews, updateOffer, clearOffer } = currentOfferSlice.actions;
 export default currentOfferSlice.reducer;
