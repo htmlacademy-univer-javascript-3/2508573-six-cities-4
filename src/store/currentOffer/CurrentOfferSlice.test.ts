@@ -1,9 +1,6 @@
 ﻿import {
   currentOfferSlice,
-  fillReviews,
   addReview,
-  fillNearbyOffers,
-  updateOffer,
   clearOffer,
   CurrentOfferState,
 } from './CurrentOfferSlice';
@@ -11,6 +8,7 @@ import { generateOffer } from '../../mocks/Offer';
 import { generateReview } from '../../mocks/Review';
 import { changeFavoriteStatus } from '../offers/OffersSlice';
 import { datatype } from 'faker';
+import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../ApiActions';
 
 describe('Current Offer slice', () => {
   let initialState: CurrentOfferState;
@@ -31,12 +29,12 @@ describe('Current Offer slice', () => {
     expect(result).toEqual(initialState);
   });
 
-  it('should fill reviews with \'fillReviews\' action', () => {
+  it('should fill reviews with \'fetchReviews\' action', () => {
     const reviews = [generateReview()];
 
     const result = currentOfferSlice.reducer(
       initialState,
-      fillReviews(reviews)
+      fetchReviews.fulfilled(reviews, '', '')
     );
 
     expect(result.reviews).toBe(reviews);
@@ -45,32 +43,26 @@ describe('Current Offer slice', () => {
   it('should add review with \'addReview\' action', () => {
     const review = generateReview();
 
-    const result = currentOfferSlice.reducer(
-      initialState,
-      addReview(review)
-    );
+    const result = currentOfferSlice.reducer(initialState, addReview(review));
 
     expect(result.reviews).toContainEqual(review);
   });
 
-  it('should fill nearby offers with \'fillNearbyOffers\' action', () => {
+  it('should fill nearby offers with \'fetchNearbyOffers\' action', () => {
     const nearbyOffers = [generateOffer(), generateOffer(), generateOffer()];
 
     const result = currentOfferSlice.reducer(
       initialState,
-      fillNearbyOffers(nearbyOffers)
+      fetchNearbyOffers.fulfilled(nearbyOffers, '', '')
     );
 
     expect(result.nearbyOffers).toEqual(nearbyOffers);
   });
 
-  it('should update current offer with \'updateOffer\' action', () => {
+  it('should update current offer with \'fetchOffer\' action', () => {
     const offer = generateOffer();
 
-    const result = currentOfferSlice.reducer(
-      initialState,
-      updateOffer(offer)
-    );
+    const result = currentOfferSlice.reducer(initialState, fetchOffer.fulfilled(offer, '', ''));
 
     expect(result.offer).toEqual(offer);
   });

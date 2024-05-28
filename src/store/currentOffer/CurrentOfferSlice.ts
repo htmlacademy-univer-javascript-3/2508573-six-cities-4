@@ -2,6 +2,7 @@
 import { Offer } from '../../entities/Offer';
 import { Review } from '../../entities/Review';
 import { changeFavoriteStatus } from '../offers/OffersSlice';
+import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../ApiActions';
 
 export type CurrentOfferState = {
   offer: Offer | undefined;
@@ -19,23 +20,14 @@ export const currentOfferSlice = createSlice({
   name: 'currentOffer',
   initialState,
   reducers: {
-    fillReviews(state, action: PayloadAction<Review[]>) {
-      state.reviews = action.payload;
-    },
     addReview(state, action: PayloadAction<Review>) {
       state.reviews.push(action.payload);
-    },
-    fillNearbyOffers(state, action: PayloadAction<Offer[]>) {
-      state.nearbyOffers = action.payload;
-    },
-    updateOffer(state, action: PayloadAction<Offer | undefined>) {
-      state.offer = action.payload;
     },
     clearOffer(state) {
       state.offer = undefined;
       state.nearbyOffers = [];
       state.reviews = [];
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -44,9 +36,18 @@ export const currentOfferSlice = createSlice({
         if (state.offer && offerId === state.offer.id) {
           state.offer.isFavorite = isFavorite;
         }
+      })
+      .addCase(fetchOffer.fulfilled, (state, action) => {
+        state.offer = action.payload;
+      })
+      .addCase(fetchReviews.fulfilled, (state, action) => {
+        state.reviews = action.payload;
+      })
+      .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
+        state.nearbyOffers = action.payload;
       });
   },
 });
 
-export const { fillNearbyOffers, fillReviews, updateOffer, clearOffer, addReview } = currentOfferSlice.actions;
+export const { clearOffer, addReview } = currentOfferSlice.actions;
 export default currentOfferSlice.reducer;

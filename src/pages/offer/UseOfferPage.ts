@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Offer } from '../../entities/Offer';
 import { Review } from '../../entities/Review';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchOffer } from '../../store/ApiActions';
+import { fetchFullOffer } from '../../store/ApiActions';
 
 type OfferPageState = {
   offer: Offer | undefined;
@@ -27,7 +27,7 @@ export function useOfferPage(): OfferPageState {
       return;
     }
     setState((s) => ({ ...s, isLoading: true }));
-    dispatch(fetchOffer(offerId))
+    dispatch(fetchFullOffer(offerId))
       .unwrap()
       .then(() => {
         setState((s) => ({ ...s, isLoading: false }));

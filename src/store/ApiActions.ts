@@ -8,12 +8,7 @@ import { AuthData } from '../entities/AuthData';
 import { changeFavoriteStatus } from './offers/OffersSlice';
 import { FavoriteData } from '../entities/FavoriteData';
 import { buildUrl } from '../services/apiUtils';
-import {
-  addReview,
-  fillNearbyOffers,
-  fillReviews,
-  updateOffer,
-} from './currentOffer/CurrentOfferSlice';
+import { addReview } from './currentOffer/CurrentOfferSlice';
 import { Review } from '../entities/Review';
 import { ReviewData } from '../entities/ReviewData';
 
@@ -79,13 +74,13 @@ export const loginAction = createAsyncThunk<
 });
 
 export const loginAndFetchFavorites = createAsyncThunk<
-void,
-AuthData,
-{
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}
+  void,
+  AuthData,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
 >('LOGIN_AND_FETCH_FAVORITES', async (authData, { dispatch }) => {
   await dispatch(loginAction(authData));
   dispatch(fetchFavoritesAction());
@@ -131,6 +126,51 @@ export const changeFavoriteStatusAction = createAsyncThunk<
 );
 
 export const fetchOffer = createAsyncThunk<
+  Offer,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('FETCH_OFFER', async (offerId, { extra: api }) => {
+  const { data: offer } = await api.get<Offer>(
+    buildUrl(ApiRoutes.Offer, { offerId })
+  );
+  return offer;
+});
+
+export const fetchReviews = createAsyncThunk<
+  Review[],
+  string,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('FETCH_REVIEWS', async (offerId, { extra: api }) => {
+  const { data: reviews } = await api.get<Review[]>(
+    buildUrl(ApiRoutes.Comments, { offerId })
+  );
+  return reviews;
+});
+
+export const fetchNearbyOffers = createAsyncThunk<
+  Offer[],
+  string,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('FETCH_NEARBY_OFFERS', async (offerId, { extra: api }) => {
+  const { data: nearbyOffers } = await api.get<Offer[]>(
+    buildUrl(ApiRoutes.OffersNearby, { offerId })
+  );
+  return nearbyOffers;
+});
+
+export const fetchFullOffer = createAsyncThunk<
   void,
   string,
   {
@@ -138,19 +178,10 @@ export const fetchOffer = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('FETCH_OFFER', async (offerId, { dispatch, extra: api }) => {
-  const { data: newOffer } = await api.get<Offer>(
-    buildUrl(ApiRoutes.Offer, { offerId })
-  );
-  dispatch(updateOffer(newOffer));
-  const { data: newReviews } = await api.get<Review[]>(
-    buildUrl(ApiRoutes.Comments, { offerId })
-  );
-  dispatch(fillReviews(newReviews));
-  const { data: newNearbyOffers } = await api.get<Offer[]>(
-    buildUrl(ApiRoutes.OffersNearby, { offerId })
-  );
-  dispatch(fillNearbyOffers(newNearbyOffers));
+>('FETCH_FULL_OFFER', (offerId, { dispatch }) => {
+  dispatch(fetchOffer(offerId));
+  dispatch(fetchReviews(offerId));
+  dispatch(fetchNearbyOffers(offerId));
 });
 
 export const sendReview = createAsyncThunk<
