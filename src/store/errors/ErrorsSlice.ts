@@ -1,6 +1,8 @@
 ﻿import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: { messages: string[] } = { messages: [] };
+export type ErrorsState = { messages: string[] };
+
+const initialState: ErrorsState = { messages: [] };
 
 export const errorSlice = createSlice({
   name: 'error',
