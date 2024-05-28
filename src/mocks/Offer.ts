@@ -11,7 +11,7 @@ export const generateOffer = (host: UserData = generateUser()): Offer => ({
   price: faker.datatype.number({ min: 50, max: 200 }),
   city: generateLocation(),
   location: generatePoint(),
-  isFavorite: faker.datatype.boolean(),
+  isFavorite: false,
   isPremium: faker.datatype.boolean(),
   rating: faker.datatype.float({ min: 0, max: 5 }),
   description: faker.lorem.paragraph(),

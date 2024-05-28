@@ -3,7 +3,7 @@ import { Offer } from '../../entities/Offer';
 import { SortingOrder } from '../../entities/SortingOrder';
 import { FavoriteData } from '../../entities/FavoriteData';
 
-type OffersState = {
+export type OffersState = {
   offers: Offer[];
   sortingOrder: SortingOrder;
   offersLoadingStatus: boolean;
