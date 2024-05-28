@@ -1,4 +1,5 @@
 ﻿import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchOffersAction } from '../ApiActions';
 
 export type ErrorsState = { messages: string[] };
 
@@ -14,6 +15,11 @@ export const errorSlice = createSlice({
     removeErrorMessage: (state, action: PayloadAction<number>) => {
       state.messages.splice(action.payload, 1);
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchOffersAction.rejected, (state) => {
+      state.messages.push('Error occured while fetching offers');
+    });
   },
 });
 

@@ -1,14 +1,12 @@
 ﻿import {
   offersSlice,
-  fillOrders,
-  setOrdersLoadingStatus,
   changeSortingOrder,
   changeFavoriteStatus,
-  fillFavorites,
   OffersState,
 } from './OffersSlice';
 import { SortingOrder } from '../../entities/SortingOrder';
 import { generateOffer } from '../../mocks/Offer';
+import { fetchFavoritesAction, fetchOffersAction } from '../ApiActions';
 
 describe('Offers slice', () => {
   let initialState: OffersState;
@@ -30,23 +28,31 @@ describe('Offers slice', () => {
     expect(result).toEqual(initialState);
   });
 
-  it('should fill offers with \'fillOrders\' action', () => {
-    const orders = [generateOffer()];
+  it('should fill offers and set loading status to false with \'fetchOffers\' action', () => {
+    const offers = [generateOffer()];
 
-    const result = offersSlice.reducer(initialState, fillOrders(orders));
+    const result = offersSlice.reducer(initialState, fetchOffersAction.fulfilled(offers, '', undefined));
 
-    expect(result.offers).toEqual(orders);
+    expect(result.offers).toEqual(offers);
+    expect(result.offersLoadingStatus).toEqual(false);
   });
 
-  it('should set loading status with \'setOrdersLoadingStatus\' action', () => {
-    const loadingStatus = true;
-
+  it('should set loading status to true when \'fetchOffers\' action pending', () => {
     const result = offersSlice.reducer(
       initialState,
-      setOrdersLoadingStatus(loadingStatus)
+      fetchOffersAction.pending
     );
 
-    expect(result.offersLoadingStatus).toEqual(loadingStatus);
+    expect(result.offersLoadingStatus).toEqual(true);
+  });
+
+  it('should set loading status to false when \'fetchOffers\' action rejected', () => {
+    const result = offersSlice.reducer(
+      initialState,
+      fetchOffersAction.rejected
+    );
+
+    expect(result.offersLoadingStatus).toEqual(false);
   });
 
   it('should change sorting order with \'changeSortingOrder\' action', () => {
@@ -112,10 +118,10 @@ describe('Offers slice', () => {
     expect(result.favorites).not.toContainEqual(favoriteOffer);
   });
 
-  it('should fill favorites with \'fillFavorites\' action', () => {
+  it('should fill favorites with \'fetchFavorites\' action', () => {
     const favorites = [generateOffer()];
 
-    const result = offersSlice.reducer(initialState, fillFavorites(favorites));
+    const result = offersSlice.reducer(initialState, fetchFavoritesAction.fulfilled(favorites, '', undefined));
 
     expect(result.favorites).toEqual(favorites);
   });

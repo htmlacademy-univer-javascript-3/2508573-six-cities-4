@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoutes } from '../../Constants';
 import { AuthData } from '../../entities/AuthData';
-import { loginAction } from '../../store/ApiActions';
+import { loginAndFetchFavorites } from '../../store/ApiActions';
 import { useAppDispatch } from '../../store/hooks';
 
 export function LoginForm() {
@@ -20,7 +20,7 @@ export function LoginForm() {
 
   const login = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loginAction(formData));
+    dispatch(loginAndFetchFavorites(formData));
     navigate(AppRoutes.Main);
   };
 

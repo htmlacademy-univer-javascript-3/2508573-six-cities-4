@@ -1,6 +1,7 @@
-﻿import { authSlice, changeAuthStatus, setUser, AuthState } from './AuthSlice';
+﻿import { authSlice, AuthState } from './AuthSlice';
 import { AuthorizationStatus } from '../../Constants';
 import { generateUser } from '../../mocks/User';
+import { checkAuthAction } from '../ApiActions';
 
 describe('Auth slice', () => {
   let initialState: AuthState;
@@ -20,19 +21,18 @@ describe('Auth slice', () => {
     expect(result).toEqual(initialState);
   });
 
-  it('should change authorization status with \'changeAuthStatus\' action', () => {
-    const authStatus = AuthorizationStatus.Auth;
-
-    const result = authSlice.reducer(initialState, changeAuthStatus(authStatus));
-
-    expect(result.authorizationStatus).toEqual(authStatus);
-  });
-
-  it('should set user with \'setUser\' action', () => {
+  it('should set user and authorization status with \'checkAuth\' fulfilled action', () => {
     const user = generateUser();
 
-    const result = authSlice.reducer(initialState, setUser(user));
+    const result = authSlice.reducer(initialState, checkAuthAction.fulfilled(user, '', undefined));
 
     expect(result.user).toEqual(user);
+    expect(result.authorizationStatus).toEqual(AuthorizationStatus.Auth);
+  });
+
+  it('should set authorization status to NoAuth with \'checkAuth\' rejected action', () => {
+    const result = authSlice.reducer(initialState, checkAuthAction.rejected);
+
+    expect(result.authorizationStatus).toEqual(AuthorizationStatus.NoAuth);
   });
 });

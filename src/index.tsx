@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
 import { store } from './store/Index';
-import { checkAuthAction, fetchFavoritesAction, fetchOrdersAction } from './store/ApiActions';
+import { checkAuthAction, fetchFavoritesAction, fetchOffersAction } from './store/ApiActions';
 
-store.dispatch(fetchOrdersAction());
+store.dispatch(fetchOffersAction());
 await store.dispatch(checkAuthAction());
 await store.dispatch(fetchFavoritesAction());
 

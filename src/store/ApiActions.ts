@@ -5,14 +5,7 @@ import { ApiRoutes, AuthorizationStatus } from '../Constants';
 import { Offer } from '../entities/Offer';
 import { User } from '../entities/User';
 import { AuthData } from '../entities/AuthData';
-import { dropToken, saveToken } from '../services/token';
-import { setUser, changeAuthStatus } from './auth/AuthSlice';
-import {
-  changeFavoriteStatus,
-  fillFavorites,
-  fillOrders,
-  setOrdersLoadingStatus,
-} from './offers/OffersSlice';
+import { changeFavoriteStatus } from './offers/OffersSlice';
 import { FavoriteData } from '../entities/FavoriteData';
 import { buildUrl } from '../services/apiUtils';
 import {
@@ -24,23 +17,21 @@ import {
 import { Review } from '../entities/Review';
 import { ReviewData } from '../entities/ReviewData';
 
-export const fetchOrdersAction = createAsyncThunk<
-  void,
+export const fetchOffersAction = createAsyncThunk<
+  Offer[],
   undefined,
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }
->('FETCH_OFFERS', async (_arg, { dispatch, extra: api }) => {
-  dispatch(setOrdersLoadingStatus(true));
+>('FETCH_OFFERS', async (_arg, { extra: api }) => {
   const { data } = await api.get<Offer[]>(ApiRoutes.Offers);
-  dispatch(setOrdersLoadingStatus(false));
-  dispatch(fillOrders(data));
+  return data;
 });
 
 export const fetchFavoritesAction = createAsyncThunk<
-  void,
+  Offer[],
   undefined,
   {
     dispatch: AppDispatch;
@@ -49,49 +40,54 @@ export const fetchFavoritesAction = createAsyncThunk<
   }
 >(
   'FETCH_FAVORITES',
-  async (_arg, { dispatch, getState, rejectWithValue, extra: api }) => {
+  async (_arg, { getState, rejectWithValue, extra: api }) => {
     if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
       return rejectWithValue('Unauthorized');
     }
     const { data } = await api.get<Offer[]>(ApiRoutes.Favorite);
-    dispatch(fillFavorites(data));
+    return data;
   }
 );
 
 export const checkAuthAction = createAsyncThunk<
-  void,
+  User,
   undefined,
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }
->('CHECK_AUTH', async (_arg, { dispatch, extra: api }) => {
-  try {
-    const user = (await api.get<User>(ApiRoutes.Login)).data;
-    dispatch(setUser(user));
-    dispatch(changeAuthStatus(AuthorizationStatus.Auth));
-  } catch {
-    dispatch(changeAuthStatus(AuthorizationStatus.NoAuth));
-  }
+>('CHECK_AUTH', async (_arg, { extra: api }) => {
+  const { data: user } = await api.get<User>(ApiRoutes.Login);
+  return user;
 });
 
 export const loginAction = createAsyncThunk<
-  void,
+  User,
   AuthData,
   {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }
->('LOGIN', async ({ login: email, password }, { dispatch, extra: api }) => {
+>('LOGIN', async ({ login: email, password }, { extra: api }) => {
   const { data: user } = await api.post<User>(ApiRoutes.Login, {
     email,
     password,
   });
-  dispatch(setUser(user));
-  saveToken(user.token);
-  dispatch(changeAuthStatus(AuthorizationStatus.Auth));
+  return user;
+});
+
+export const loginAndFetchFavorites = createAsyncThunk<
+void,
+AuthData,
+{
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}
+>('LOGIN_AND_FETCH_FAVORITES', async (authData, { dispatch }) => {
+  await dispatch(loginAction(authData));
   dispatch(fetchFavoritesAction());
 });
 
@@ -103,11 +99,8 @@ export const logoutAction = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('LOGOUT', async (_arg, { dispatch, extra: api }) => {
+>('LOGOUT', async (_arg, { extra: api }) => {
   await api.delete(ApiRoutes.Logout);
-  dropToken();
-  dispatch(changeAuthStatus(AuthorizationStatus.NoAuth));
-  dispatch(setUser(null));
 });
 
 export const changeFavoriteStatusAction = createAsyncThunk<
