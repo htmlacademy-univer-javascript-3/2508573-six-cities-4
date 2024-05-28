@@ -15,7 +15,7 @@ describe('Auth slice', () => {
   it('should return initial state with empty action', () => {
     const emptyAction = { type: '' };
 
-    const result = authSlice.reducer(initialState, emptyAction);
+    const result = authSlice.reducer(undefined, emptyAction);
 
     expect(result).toEqual(initialState);
   });

@@ -11,7 +11,7 @@ describe('Error slice', () => {
   it('should return initial state with empty action', () => {
     const emptyAction = { type: '' };
 
-    const result = errorSlice.reducer(initialState, emptyAction);
+    const result = errorSlice.reducer(undefined, emptyAction);
 
     expect(result).toEqual(initialState);
   });

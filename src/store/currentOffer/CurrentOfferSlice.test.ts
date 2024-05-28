@@ -26,7 +26,7 @@ describe('Current Offer slice', () => {
   it('should return initial state with empty action', () => {
     const emptyAction = { type: '' };
 
-    const result = currentOfferSlice.reducer(initialState, emptyAction);
+    const result = currentOfferSlice.reducer(undefined, emptyAction);
 
     expect(result).toEqual(initialState);
   });

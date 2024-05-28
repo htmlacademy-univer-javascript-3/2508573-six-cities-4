@@ -25,7 +25,7 @@ describe('Offers slice', () => {
   it('should return initial state with empty action', () => {
     const emptyAction = { type: '' };
 
-    const result = offersSlice.reducer(initialState, emptyAction);
+    const result = offersSlice.reducer(undefined, emptyAction);
 
     expect(result).toEqual(initialState);
   });
