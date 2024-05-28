@@ -17,7 +17,7 @@ import { useOfferPage } from './UseOfferPage';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Spinner } from '../../components/spinner/Spinner';
-import { clearOffer } from '../../store/slices/CurrentOfferSlice';
+import { clearOffer } from '../../store/currentOffer/CurrentOfferSlice';
 
 export function OfferPage() {
   const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
@@ -26,10 +26,10 @@ export function OfferPage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (error !== undefined || (!isLoading && offer === undefined)) {
+    if (error !== undefined) {
       navigate(AppRoutes.NotFound);
     }
-  }, [error, navigate, offer, isLoading]);
+  }, [error, navigate]);
 
   useEffect(
     () => () => {

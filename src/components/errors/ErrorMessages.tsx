@@ -1,5 +1,5 @@
 ﻿import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { removeErrorMessage } from '../../store/slices/ErrorsSlice';
+import { removeErrorMessage } from '../../store/errors/ErrorsSlice';
 import { ErrorMessage } from './ErrorMessage';
 import styles from './ErrorMessage.module.css';
 

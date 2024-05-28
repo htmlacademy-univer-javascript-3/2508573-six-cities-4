@@ -1,7 +1,7 @@
 ﻿import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { sendReview } from '../../../store/ApiActions';
-import { addErrorMessage } from '../../../store/slices/ErrorsSlice';
+import { addErrorMessage } from '../../../store/errors/ErrorsSlice';
 
 export default function ReviewForm() {
   const [formData, setFormData] = useState({

@@ -6,13 +6,13 @@ import { Offer } from '../entities/Offer';
 import { User } from '../entities/User';
 import { AuthData } from '../entities/AuthData';
 import { dropToken, saveToken } from '../services/token';
-import { setUser, changeAuthStatus } from './slices/AuthSlice';
+import { setUser, changeAuthStatus } from './auth/AuthSlice';
 import {
   changeFavoriteStatus,
   fillFavorites,
   fillOrders,
   setOrdersLoadingStatus,
-} from './slices/OffersSlice';
+} from './offers/OffersSlice';
 import { FavoriteData } from '../entities/FavoriteData';
 import { buildUrl } from '../services/apiUtils';
 import {
@@ -20,7 +20,7 @@ import {
   fillNearbyOffers,
   fillReviews,
   updateOffer,
-} from './slices/CurrentOfferSlice';
+} from './currentOffer/CurrentOfferSlice';
 import { Review } from '../entities/Review';
 import { ReviewData } from '../entities/ReviewData';
 

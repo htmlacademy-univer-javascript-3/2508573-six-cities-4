@@ -1,7 +1,7 @@
 ﻿import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Offer } from '../../entities/Offer';
 import { Review } from '../../entities/Review';
-import { changeFavoriteStatus } from './OffersSlice';
+import { changeFavoriteStatus } from '../offers/OffersSlice';
 
 type CurrentOfferState = {
   offer: Offer | undefined;

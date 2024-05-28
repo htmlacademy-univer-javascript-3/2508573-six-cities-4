@@ -1,10 +1,10 @@
 ﻿import { configureStore } from '@reduxjs/toolkit';
 import { createAPI } from '../services/api';
-import cityReducer from './slices/CitySlice';
-import offersReducer from './slices/OffersSlice';
-import authReducer from './slices/AuthSlice';
-import currentOfferReducer from './slices/CurrentOfferSlice';
-import errorReducer from './slices/ErrorsSlice';
+import cityReducer from './city/CitySlice';
+import offersReducer from './offers/OffersSlice';
+import authReducer from './auth/AuthSlice';
+import currentOfferReducer from './currentOffer/CurrentOfferSlice';
+import errorReducer from './errors/ErrorsSlice';
 
 export const api = createAPI();
 

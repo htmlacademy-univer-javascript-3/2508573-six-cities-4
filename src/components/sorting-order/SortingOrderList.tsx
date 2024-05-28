@@ -2,7 +2,7 @@
 import cn from 'classnames';
 import { SortingOrder, sortingOrders } from '../../entities/SortingOrder';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { changeSortingOrder } from '../../store/slices/OffersSlice';
+import { changeSortingOrder } from '../../store/offers/OffersSlice';
 
 function SortingOrderListInternal() {
   const [isOpen, setIsOpen] = useState(false);
