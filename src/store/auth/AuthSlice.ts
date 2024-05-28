@@ -2,7 +2,7 @@
 import { AuthorizationStatus } from '../../Constants';
 import { User } from '../../entities/User';
 
-type AuthState = {
+export type AuthState = {
   authorizationStatus: AuthorizationStatus;
   user: User | null;
 };
