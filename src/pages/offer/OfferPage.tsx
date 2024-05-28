@@ -21,15 +21,15 @@ import { clearOffer } from '../../store/currentOffer/CurrentOfferSlice';
 
 export function OfferPage() {
   const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
-  const { offer, reviews, nearbyOffers, error, isLoading } = useOfferPage();
+  const { offer, reviews, nearbyOffers, isError, isLoading } = useOfferPage();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (error !== undefined) {
+    if (isError) {
       navigate(AppRoutes.NotFound);
     }
-  }, [error, navigate]);
+  }, [isError, navigate]);
 
   useEffect(
     () => () => {

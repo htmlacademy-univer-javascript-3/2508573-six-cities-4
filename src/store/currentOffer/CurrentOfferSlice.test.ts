@@ -18,6 +18,8 @@ describe('Current Offer slice', () => {
       offer: undefined,
       reviews: [],
       nearbyOffers: [],
+      isError: false,
+      isLoading: false,
     };
   });
 
@@ -72,6 +74,8 @@ describe('Current Offer slice', () => {
       offer: generateOffer(),
       reviews: [generateReview()],
       nearbyOffers: [generateOffer(), generateOffer()],
+      isError: false,
+      isLoading: false
     };
 
     const result = currentOfferSlice.reducer(initialState, clearOffer());

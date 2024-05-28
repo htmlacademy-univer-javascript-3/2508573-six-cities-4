@@ -133,7 +133,7 @@ export const fetchOffer = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('FETCH_OFFER', async (offerId, { extra: api }) => {
+>('offers/FETCH_OFFER', async (offerId, { extra: api }) => {
   const { data: offer } = await api.get<Offer>(
     buildUrl(ApiRoutes.Offer, { offerId })
   );
@@ -148,7 +148,7 @@ export const fetchReviews = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('FETCH_REVIEWS', async (offerId, { extra: api }) => {
+>('offers/FETCH_REVIEWS', async (offerId, { extra: api }) => {
   const { data: reviews } = await api.get<Review[]>(
     buildUrl(ApiRoutes.Comments, { offerId })
   );
@@ -163,12 +163,15 @@ export const fetchNearbyOffers = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('FETCH_NEARBY_OFFERS', async (offerId, { extra: api }) => {
-  const { data: nearbyOffers } = await api.get<Offer[]>(
-    buildUrl(ApiRoutes.OffersNearby, { offerId })
-  );
-  return nearbyOffers;
-});
+>(
+  'offers/FETCH_NEARBY_OFFERS',
+  async (offerId, { extra: api }) => {
+    const { data: nearbyOffers } = await api.get<Offer[]>(
+      buildUrl(ApiRoutes.OffersNearby, { offerId })
+    );
+    return nearbyOffers;
+  }
+);
 
 export const fetchFullOffer = createAsyncThunk<
   void,

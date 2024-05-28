@@ -9,7 +9,7 @@ type OfferPageState = {
   offer: Offer | undefined;
   reviews: Review[];
   nearbyOffers: Offer[];
-  error: string | Error | undefined;
+  isError: boolean;
   isLoading: boolean;
 };
 
@@ -17,27 +17,15 @@ export function useOfferPage(): OfferPageState {
   const { offerId } = useParams<{ offerId?: string }>();
   const dispatch = useAppDispatch();
   const currentOfferState = useAppSelector((state) => state.currentOffer);
-  const [state, setState] = useState<
-    Pick<OfferPageState, 'error' | 'isLoading'>
-  >({ error: undefined, isLoading: true });
+  const [isError, setError] = useState(false);
 
   useEffect(() => {
     if (offerId === undefined) {
-      setState((s) => ({ ...s, error: new Error('Invalid offerId') }));
+      setError(true);
       return;
     }
-    setState((s) => ({ ...s, isLoading: true }));
-    dispatch(fetchFullOffer(offerId))
-      .unwrap()
-      .then(() => {
-        setState((s) => ({ ...s, isLoading: false }));
-      })
-      .catch((e) => {
-        if (e instanceof Error || typeof e === 'string') {
-          setState((s) => ({ ...s, error: e, isLoading: false }));
-        }
-      });
+    dispatch(fetchFullOffer(offerId));
   }, [dispatch, offerId]);
 
-  return { ...currentOfferState, ...state };
+  return { ...currentOfferState, isError: currentOfferState.isError || isError};
 }
