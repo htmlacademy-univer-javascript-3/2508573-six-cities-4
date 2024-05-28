@@ -2,8 +2,9 @@
 import { Offer } from '../entities/Offer';
 import { UserData } from '../entities/User';
 import { generateLocation, generatePoint } from './Location';
+import { generateUser } from './User';
 
-export const generateOffer = (host: UserData): Offer => ({
+export const generateOffer = (host: UserData = generateUser()): Offer => ({
   id: faker.datatype.uuid(),
   title: faker.lorem.words(3),
   type: faker.lorem.word(),

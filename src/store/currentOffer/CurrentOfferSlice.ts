@@ -3,7 +3,7 @@ import { Offer } from '../../entities/Offer';
 import { Review } from '../../entities/Review';
 import { changeFavoriteStatus } from '../offers/OffersSlice';
 
-type CurrentOfferState = {
+export type CurrentOfferState = {
   offer: Offer | undefined;
   reviews: Review[];
   nearbyOffers: Offer[];
@@ -15,7 +15,7 @@ const initialState: CurrentOfferState = {
   nearbyOffers: [],
 };
 
-const currentOfferSlice = createSlice({
+export const currentOfferSlice = createSlice({
   name: 'currentOffer',
   initialState,
   reducers: {
