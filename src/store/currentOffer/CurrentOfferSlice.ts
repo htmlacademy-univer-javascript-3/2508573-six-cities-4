@@ -1,4 +1,4 @@
-﻿import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+﻿import { createSlice } from '@reduxjs/toolkit';
 import { Offer } from '../../entities/Offer';
 import { Review } from '../../entities/Review';
 import { changeFavoriteStatus } from '../offers/OffersSlice';
@@ -7,6 +7,7 @@ import {
   fetchNearbyOffers,
   fetchOffer,
   fetchReviews,
+  sendReview,
 } from '../ApiActions';
 export type CurrentOfferState = {
   offer: Offer | undefined;
@@ -28,13 +29,12 @@ export const currentOfferSlice = createSlice({
   name: 'currentOffer',
   initialState,
   reducers: {
-    addReview(state, action: PayloadAction<Review>) {
-      state.reviews.push(action.payload);
-    },
     clearOffer(state) {
       state.offer = undefined;
       state.nearbyOffers = [];
       state.reviews = [];
+      state.isError = false;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
@@ -46,6 +46,7 @@ export const currentOfferSlice = createSlice({
         }
       })
       .addCase(fetchOffer.fulfilled, (state, action) => {
+        state.isError = false;
         state.offer = action.payload;
       })
       .addCase(fetchOffer.rejected, (state) => {
@@ -65,9 +66,12 @@ export const currentOfferSlice = createSlice({
       })
       .addCase(fetchFullOffer.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(sendReview.fulfilled, (state, action) => {
+        state.reviews.push(action.payload);
       });
   },
 });
 
-export const { clearOffer, addReview } = currentOfferSlice.actions;
+export const { clearOffer } = currentOfferSlice.actions;
 export default currentOfferSlice.reducer;

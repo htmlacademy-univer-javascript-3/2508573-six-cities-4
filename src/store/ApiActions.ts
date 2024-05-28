@@ -8,7 +8,6 @@ import { AuthData } from '../entities/AuthData';
 import { changeFavoriteStatus } from './offers/OffersSlice';
 import { FavoriteData } from '../entities/FavoriteData';
 import { buildUrl } from '../services/apiUtils';
-import { addReview } from './currentOffer/CurrentOfferSlice';
 import { Review } from '../entities/Review';
 import { ReviewData } from '../entities/ReviewData';
 
@@ -133,7 +132,7 @@ export const fetchOffer = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('offers/FETCH_OFFER', async (offerId, { extra: api }) => {
+>('FETCH_OFFER', async (offerId, { extra: api }) => {
   const { data: offer } = await api.get<Offer>(
     buildUrl(ApiRoutes.Offer, { offerId })
   );
@@ -148,7 +147,7 @@ export const fetchReviews = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('offers/FETCH_REVIEWS', async (offerId, { extra: api }) => {
+>('FETCH_REVIEWS', async (offerId, { extra: api }) => {
   const { data: reviews } = await api.get<Review[]>(
     buildUrl(ApiRoutes.Comments, { offerId })
   );
@@ -164,7 +163,7 @@ export const fetchNearbyOffers = createAsyncThunk<
     extra: AxiosInstance;
   }
 >(
-  'offers/FETCH_NEARBY_OFFERS',
+  'FETCH_NEARBY_OFFERS',
   async (offerId, { extra: api }) => {
     const { data: nearbyOffers } = await api.get<Offer[]>(
       buildUrl(ApiRoutes.OffersNearby, { offerId })
@@ -188,7 +187,7 @@ export const fetchFullOffer = createAsyncThunk<
 });
 
 export const sendReview = createAsyncThunk<
-  void,
+  Review,
   ReviewData,
   {
     dispatch: AppDispatch;
@@ -199,7 +198,7 @@ export const sendReview = createAsyncThunk<
   'SEND_REVIEW',
   async (
     { offerId, formData },
-    { dispatch, getState, rejectWithValue, extra: api }
+    { getState, rejectWithValue, extra: api }
   ) => {
     if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
       return rejectWithValue('Unauthorized');
@@ -208,6 +207,6 @@ export const sendReview = createAsyncThunk<
       buildUrl(ApiRoutes.Comments, { offerId }),
       formData
     );
-    dispatch(addReview(review));
+    return review;
   }
 );

@@ -1,6 +1,5 @@
 ﻿import {
   currentOfferSlice,
-  addReview,
   clearOffer,
   CurrentOfferState,
 } from './CurrentOfferSlice';
@@ -8,7 +7,8 @@ import { generateOffer } from '../../mocks/Offer';
 import { generateReview } from '../../mocks/Review';
 import { changeFavoriteStatus } from '../offers/OffersSlice';
 import { datatype } from 'faker';
-import { fetchNearbyOffers, fetchOffer, fetchReviews } from '../ApiActions';
+import { fetchFullOffer, fetchNearbyOffers, fetchOffer, fetchReviews, sendReview } from '../ApiActions';
+import { ReviewData } from '../../entities/ReviewData';
 
 describe('Current Offer slice', () => {
   let initialState: CurrentOfferState;
@@ -42,10 +42,10 @@ describe('Current Offer slice', () => {
     expect(result.reviews).toBe(reviews);
   });
 
-  it('should add review with \'addReview\' action', () => {
+  it('should add review with \'sendReview\' action', () => {
     const review = generateReview();
 
-    const result = currentOfferSlice.reducer(initialState, addReview(review));
+    const result = currentOfferSlice.reducer(initialState, sendReview.fulfilled(review, '', {} as ReviewData));
 
     expect(result.reviews).toContainEqual(review);
   });
@@ -61,12 +61,35 @@ describe('Current Offer slice', () => {
     expect(result.nearbyOffers).toEqual(nearbyOffers);
   });
 
-  it('should update current offer with \'fetchOffer\' action', () => {
+  it('should update current offer and set isError to true with \'fetchOffer\' action', () => {
     const offer = generateOffer();
 
     const result = currentOfferSlice.reducer(initialState, fetchOffer.fulfilled(offer, '', ''));
 
     expect(result.offer).toEqual(offer);
+    expect(result.isError).toEqual(false);
+  });
+
+  it('should set isError to true with \'fetchOffer\' rejected action', () => {
+    const result = currentOfferSlice.reducer(initialState, fetchOffer.rejected);
+
+    expect(result.isError).toEqual(true);
+  });
+
+  it('should set isLoading to true with \'fetchFullOffer\' pending action', () => {
+    const result = currentOfferSlice.reducer(initialState, fetchFullOffer.pending);
+
+    expect(result.isLoading).toEqual(true);
+  });
+
+  it('should set isLoading to false with \'fetchFullOffer\' fulfilled or rejected action', () => {
+    let result = currentOfferSlice.reducer(initialState, fetchFullOffer.fulfilled);
+
+    expect(result.isLoading).toEqual(false);
+
+    result = currentOfferSlice.reducer(initialState, fetchFullOffer.rejected);
+
+    expect(result.isLoading).toEqual(false);
   });
 
   it('should clear current offer with \'clearOffer\' action', () => {
@@ -74,8 +97,8 @@ describe('Current Offer slice', () => {
       offer: generateOffer(),
       reviews: [generateReview()],
       nearbyOffers: [generateOffer(), generateOffer()],
-      isError: false,
-      isLoading: false
+      isError: true,
+      isLoading: true
     };
 
     const result = currentOfferSlice.reducer(initialState, clearOffer());
@@ -83,6 +106,8 @@ describe('Current Offer slice', () => {
     expect(result.offer).toBeUndefined();
     expect(result.reviews).toHaveLength(0);
     expect(result.nearbyOffers).toHaveLength(0);
+    expect(result.isError).toEqual(false);
+    expect(result.isLoading).toEqual(false);
   });
 
   it('should update favorite status of current offer when "changeFavoriteStatus" action is dispatched', () => {
