@@ -82,7 +82,7 @@ export const loginAndFetchFavorites = createAsyncThunk<
   }
 >('LOGIN_AND_FETCH_FAVORITES', async (authData, { dispatch }) => {
   await dispatch(loginAction(authData));
-  dispatch(fetchFavoritesAction());
+  await dispatch(fetchFavoritesAction());
 });
 
 export const logoutAction = createAsyncThunk<
