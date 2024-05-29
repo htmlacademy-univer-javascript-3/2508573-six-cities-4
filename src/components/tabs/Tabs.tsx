@@ -1,15 +1,7 @@
 ﻿import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../Constants';
 import cn from 'classnames';
-
-const cities = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf',
-];
+import { Cities } from '../../Constants';
 
 type TabsProps = {
   selectedCity: string;
@@ -18,10 +10,10 @@ type TabsProps = {
 
 export default function Tabs({ selectedCity, onClick }: TabsProps) {
   return (
-    <div className="tabs">
+    <div className="tabs" data-testid="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cities.map((city) => (
+          {Cities.map((city) => (
             <li key={city} className="locations__item">
               <Link
                 to={AppRoutes.Main}
@@ -29,6 +21,7 @@ export default function Tabs({ selectedCity, onClick }: TabsProps) {
                   ['tabs__item--active']: city === selectedCity,
                 })}
                 onClick={() => onClick(city)}
+                data-testid={`tabs-item-${city}`}
               >
                 <span>{city}</span>
               </Link>
