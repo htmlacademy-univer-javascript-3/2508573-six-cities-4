@@ -35,6 +35,7 @@ export function LoginForm() {
           placeholder="Email"
           onChange={handleFormChange}
           value={formData.login}
+          data-testid="login-form__login"
           required
         />
       </div>
@@ -42,17 +43,19 @@ export function LoginForm() {
         <label className="visually-hidden">Password</label>
         <input
           className="login__input form__input"
-          type="password"
+          type="password" // TODO: password validation
           name="password"
           placeholder="Password"
           onChange={handleFormChange}
           value={formData.password}
+          data-testid="login-form__password"
           required
         />
       </div>
       <button
         className="login__submit form__submit button"
         type="submit"
+        data-testid="login-form__submit-button"
       >
         Sign in
       </button>
