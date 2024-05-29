@@ -6,12 +6,11 @@ describe('Component: NotFoundPage', () => {
   it('should render correctly', () => {
     render(withHistory(<NotFoundPage />));
 
-    const notFoundText = screen.getByText('Page not found');
-    const goToHomePageButton = screen.getByRole('link', {
-      name: 'Go to home page',
-    });
+    const notFoundPage = screen.getByTestId('notfoundpage');
+    const goToHomePageButton = screen.getByTestId('notfoundpage__goto-home');
 
-    expect(notFoundText).toBeInTheDocument();
-    expect(goToHomePageButton).toBeInTheDocument();
+    expect(notFoundPage).toBeInTheDocument();
+    expect(notFoundPage.textContent).toContain('Page not found');
+    expect(goToHomePageButton.textContent).toContain('Go to home page');
   });
 });
