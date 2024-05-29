@@ -2,31 +2,26 @@
 import { Offer } from '../../entities/Offer';
 import { SortingOrder } from '../../entities/SortingOrder';
 import { FavoriteData } from '../../entities/FavoriteData';
+import { fetchFavoritesAction, fetchOffersAction } from '../ApiActions';
 
-type OffersState = {
+export type OffersState = {
   offers: Offer[];
   sortingOrder: SortingOrder;
   offersLoadingStatus: boolean;
   favorites: Offer[];
-}
+};
 
 const initialState: OffersState = {
   offers: [],
   sortingOrder: 'Popular',
   offersLoadingStatus: false,
-  favorites: []
+  favorites: [],
 };
 
 export const offersSlice = createSlice({
   name: 'offers',
   initialState,
   reducers: {
-    fillOrders(state, action: PayloadAction<Offer[]>) {
-      state.offers = action.payload;
-    },
-    setOrdersLoadingStatus(state, action: PayloadAction<boolean>) {
-      state.offersLoadingStatus = action.payload;
-    },
     changeSortingOrder(state, action: PayloadAction<SortingOrder>) {
       state.sortingOrder = action.payload;
     },
@@ -42,11 +37,27 @@ export const offersSlice = createSlice({
         }
       }
     },
-    fillFavorites(state, action: PayloadAction<Offer[]>) {
-      state.favorites = action.payload;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchOffersAction.pending, (state) => {
+        state.offersLoadingStatus = true;
+      })
+      .addCase(fetchOffersAction.fulfilled, (state, action) => {
+        state.offers = action.payload;
+        state.offersLoadingStatus = false;
+      })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.offersLoadingStatus = false;
+      })
+      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+      });
   },
 });
 
-export const { fillOrders, setOrdersLoadingStatus, changeSortingOrder, changeFavoriteStatus, fillFavorites } = offersSlice.actions;
+export const {
+  changeSortingOrder,
+  changeFavoriteStatus,
+} = offersSlice.actions;
 export default offersSlice.reducer;

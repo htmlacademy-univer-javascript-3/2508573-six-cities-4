@@ -3,8 +3,8 @@ import Tabs from '../../components/tabs/Tabs';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import cn from 'classnames';
 import { OfferList, EmptyOfferList } from './OfferList';
-import { cityOffersSelector } from '../../store/Selectors';
-import { changeCity } from '../../store/slices/CitySlice';
+import { cityOffersSelector } from '../../store/offers/Selectors';
+import { changeCity } from '../../store/city/CitySlice';
 import { Spinner } from '../../components/spinner/Spinner';
 
 export function HomePage() {

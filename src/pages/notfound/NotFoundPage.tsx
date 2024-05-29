@@ -10,10 +10,10 @@ export default function NotFoundPage() {
       <Helmet>
         <title>6 cities: not found</title>
       </Helmet>
-      <main className="page__main">
+      <main className="page__main" data-testid="notfoundpage">
         <div className={cn(styles.page__not_found, 'container')}>
           <h3 className={styles.not_found__title}>Page not found</h3>
-          <Link className='button form__submit' to={AppRoutes.Main}>Go to home page</Link>
+          <Link className='button form__submit' to={AppRoutes.Main} data-testid="notfoundpage__goto-home">Go to home page</Link>
         </div>
       </main>
     </>

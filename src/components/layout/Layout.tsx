@@ -1,22 +1,26 @@
 ﻿import cn from 'classnames';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { AppRoutes, AuthorizationStatus } from '../Constants';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { logoutAction } from '../store/ApiActions';
+import { AppRoutes, AuthorizationStatus } from '../../Constants';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { logoutAction } from '../../store/ApiActions';
+import ErrorMessages from '../errors/ErrorMessages';
 
 export default function Layout() {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const pageClasses = cn('page', {
-    'page--gray page--main': location.pathname === AppRoutes.Main,
-    'page--gray page--login': location.pathname === AppRoutes.Login,
-  });
   const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
   const user = useAppSelector((state) => state.auth.user);
   const favoriteCount = useAppSelector(
     (state) => state.offers.favorites.length
   );
+
+  const pageClasses = cn('page', {
+    'page--gray page--main': location.pathname === AppRoutes.Main,
+    'page--gray page--login': location.pathname === AppRoutes.Login,
+    'page--favorites-empty':
+      location.pathname === AppRoutes.Favorites && favoriteCount === 0,
+  });
 
   const logOut = () => {
     dispatch(logoutAction());
@@ -61,7 +65,11 @@ export default function Layout() {
                       </Link>
                     </li>
                     <li className="header__nav-item">
-                      <Link to={AppRoutes.Main} onClick={logOut} className="header__nav-link">
+                      <Link
+                        to={AppRoutes.Main}
+                        onClick={logOut}
+                        className="header__nav-link"
+                      >
                         <span className="header__signout">Sign out</span>
                       </Link>
                     </li>
@@ -83,6 +91,7 @@ export default function Layout() {
         </div>
       </header>
       <Outlet />
+      <ErrorMessages />
     </div>
   );
 }

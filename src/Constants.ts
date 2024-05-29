@@ -38,3 +38,11 @@ export const currentCustomIcon = leaflet.icon({
   iconSize: [27, 39],
   iconAnchor: [27, 20],
 });
+export const Cities = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];

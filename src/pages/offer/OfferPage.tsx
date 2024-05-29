@@ -17,19 +17,19 @@ import { useOfferPage } from './UseOfferPage';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Spinner } from '../../components/spinner/Spinner';
-import { clearOffer } from '../../store/slices/CurrentOfferSlice';
+import { clearOffer } from '../../store/currentOffer/CurrentOfferSlice';
 
 export function OfferPage() {
   const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
-  const { offer, reviews, nearbyOffers, error, isLoading } = useOfferPage();
+  const { offer, reviews, nearbyOffers, isError, isLoading } = useOfferPage();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (error !== undefined || (!isLoading && offer === undefined)) {
+    if (isError) {
       navigate(AppRoutes.NotFound);
     }
-  }, [error, navigate, offer, isLoading]);
+  }, [isError, navigate]);
 
   useEffect(
     () => () => {
