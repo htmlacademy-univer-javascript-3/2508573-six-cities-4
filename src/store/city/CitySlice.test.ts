@@ -20,11 +20,14 @@ describe('City slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should change city with \'changeCity\' action', () => {
+  it("should change city with 'changeCity' action", () => {
     const initialState = { city: address.city() };
     const expectedState = { city: address.city() };
 
-    const result = citySlice.reducer(initialState, changeCity(expectedState.city));
+    const result = citySlice.reducer(
+      initialState,
+      changeCity(expectedState.city)
+    );
 
     expect(result).toStrictEqual(expectedState);
   });

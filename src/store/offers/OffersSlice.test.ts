@@ -28,25 +28,25 @@ describe('Offers slice', () => {
     expect(result).toEqual(initialState);
   });
 
-  it('should fill offers and set loading status to false with \'fetchOffers\' action', () => {
+  it("should fill offers and set loading status to false with 'fetchOffers' action", () => {
     const offers = [generateOffer()];
 
-    const result = offersSlice.reducer(initialState, fetchOffersAction.fulfilled(offers, '', undefined));
+    const result = offersSlice.reducer(
+      initialState,
+      fetchOffersAction.fulfilled(offers, '', undefined)
+    );
 
     expect(result.offers).toEqual(offers);
     expect(result.offersLoadingStatus).toEqual(false);
   });
 
-  it('should set loading status to true when \'fetchOffers\' action pending', () => {
-    const result = offersSlice.reducer(
-      initialState,
-      fetchOffersAction.pending
-    );
+  it("should set loading status to true when 'fetchOffers' action pending", () => {
+    const result = offersSlice.reducer(initialState, fetchOffersAction.pending);
 
     expect(result.offersLoadingStatus).toEqual(true);
   });
 
-  it('should set loading status to false when \'fetchOffers\' action rejected', () => {
+  it("should set loading status to false when 'fetchOffers' action rejected", () => {
     const result = offersSlice.reducer(
       initialState,
       fetchOffersAction.rejected
@@ -55,7 +55,7 @@ describe('Offers slice', () => {
     expect(result.offersLoadingStatus).toEqual(false);
   });
 
-  it('should change sorting order with \'changeSortingOrder\' action', () => {
+  it("should change sorting order with 'changeSortingOrder' action", () => {
     const newSortingOrder: SortingOrder = 'Price: high to low';
 
     const result = offersSlice.reducer(
@@ -66,7 +66,7 @@ describe('Offers slice', () => {
     expect(result.sortingOrder).toEqual(newSortingOrder);
   });
 
-  it('should change favorite status and update favorites list with \'changeFavoriteStatus\' action', () => {
+  it("should change favorite status and update favorites list with 'changeFavoriteStatus' action", () => {
     const offer = generateOffer();
     initialState.offers = [offer];
 
@@ -118,10 +118,13 @@ describe('Offers slice', () => {
     expect(result.favorites).not.toContainEqual(favoriteOffer);
   });
 
-  it('should fill favorites with \'fetchFavorites\' action', () => {
+  it("should fill favorites with 'fetchFavorites' action", () => {
     const favorites = [generateOffer()];
 
-    const result = offersSlice.reducer(initialState, fetchFavoritesAction.fulfilled(favorites, '', undefined));
+    const result = offersSlice.reducer(
+      initialState,
+      fetchFavoritesAction.fulfilled(favorites, '', undefined)
+    );
 
     expect(result.favorites).toEqual(favorites);
   });

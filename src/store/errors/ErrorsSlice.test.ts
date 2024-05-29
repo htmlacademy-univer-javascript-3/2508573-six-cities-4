@@ -16,16 +16,19 @@ describe('Error slice', () => {
     expect(result).toEqual(initialState);
   });
 
-  it('should add error message with \'addErrorMessage\' action', () => {
+  it("should add error message with 'addErrorMessage' action", () => {
     const errorMessage = 'An error occurred';
 
-    const result = errorSlice.reducer(initialState, addErrorMessage(errorMessage));
+    const result = errorSlice.reducer(
+      initialState,
+      addErrorMessage(errorMessage)
+    );
 
     expect(result.messages).toHaveLength(1);
     expect(result.messages[0]).toEqual(errorMessage);
   });
 
-  it('should remove error message with \'removeErrorMessage\' action', () => {
+  it("should remove error message with 'removeErrorMessage' action", () => {
     initialState.messages = ['Error 1', 'Error 2', 'Error 3'];
     const expectedState = ['Error 1', 'Error 3'];
 

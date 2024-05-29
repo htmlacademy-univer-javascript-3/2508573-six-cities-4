@@ -21,16 +21,19 @@ describe('Auth slice', () => {
     expect(result).toEqual(initialState);
   });
 
-  it('should set user and authorization status with \'checkAuth\' fulfilled action', () => {
+  it("should set user and authorization status with 'checkAuth' fulfilled action", () => {
     const user = generateUser();
 
-    const result = authSlice.reducer(initialState, checkAuthAction.fulfilled(user, '', undefined));
+    const result = authSlice.reducer(
+      initialState,
+      checkAuthAction.fulfilled(user, '', undefined)
+    );
 
     expect(result.user).toEqual(user);
     expect(result.authorizationStatus).toEqual(AuthorizationStatus.Auth);
   });
 
-  it('should set authorization status to NoAuth with \'checkAuth\' rejected action', () => {
+  it("should set authorization status to NoAuth with 'checkAuth' rejected action", () => {
     const result = authSlice.reducer(initialState, checkAuthAction.rejected);
 
     expect(result.authorizationStatus).toEqual(AuthorizationStatus.NoAuth);

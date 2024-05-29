@@ -7,7 +7,13 @@ import { generateOffer } from '../../mocks/Offer';
 import { generateReview } from '../../mocks/Review';
 import { changeFavoriteStatus } from '../offers/OffersSlice';
 import { datatype } from 'faker';
-import { fetchFullOffer, fetchNearbyOffers, fetchOffer, fetchReviews, sendReview } from '../ApiActions';
+import {
+  fetchFullOffer,
+  fetchNearbyOffers,
+  fetchOffer,
+  fetchReviews,
+  sendReview,
+} from '../ApiActions';
 import { ReviewData } from '../../entities/ReviewData';
 
 describe('Current Offer slice', () => {
@@ -31,7 +37,7 @@ describe('Current Offer slice', () => {
     expect(result).toEqual(initialState);
   });
 
-  it('should fill reviews with \'fetchReviews\' action', () => {
+  it("should fill reviews with 'fetchReviews' action", () => {
     const reviews = [generateReview()];
 
     const result = currentOfferSlice.reducer(
@@ -42,15 +48,18 @@ describe('Current Offer slice', () => {
     expect(result.reviews).toBe(reviews);
   });
 
-  it('should add review with \'sendReview\' action', () => {
+  it("should add review with 'sendReview' action", () => {
     const review = generateReview();
 
-    const result = currentOfferSlice.reducer(initialState, sendReview.fulfilled(review, '', {} as ReviewData));
+    const result = currentOfferSlice.reducer(
+      initialState,
+      sendReview.fulfilled(review, '', {} as ReviewData)
+    );
 
     expect(result.reviews).toContainEqual(review);
   });
 
-  it('should fill nearby offers with \'fetchNearbyOffers\' action', () => {
+  it("should fill nearby offers with 'fetchNearbyOffers' action", () => {
     const nearbyOffers = [generateOffer(), generateOffer(), generateOffer()];
 
     const result = currentOfferSlice.reducer(
@@ -61,29 +70,38 @@ describe('Current Offer slice', () => {
     expect(result.nearbyOffers).toEqual(nearbyOffers);
   });
 
-  it('should update current offer and set isError to true with \'fetchOffer\' action', () => {
+  it("should update current offer and set isError to true with 'fetchOffer' action", () => {
     const offer = generateOffer();
 
-    const result = currentOfferSlice.reducer(initialState, fetchOffer.fulfilled(offer, '', ''));
+    const result = currentOfferSlice.reducer(
+      initialState,
+      fetchOffer.fulfilled(offer, '', '')
+    );
 
     expect(result.offer).toEqual(offer);
     expect(result.isError).toEqual(false);
   });
 
-  it('should set isError to true with \'fetchOffer\' rejected action', () => {
+  it("should set isError to true with 'fetchOffer' rejected action", () => {
     const result = currentOfferSlice.reducer(initialState, fetchOffer.rejected);
 
     expect(result.isError).toEqual(true);
   });
 
-  it('should set isLoading to true with \'fetchFullOffer\' pending action', () => {
-    const result = currentOfferSlice.reducer(initialState, fetchFullOffer.pending);
+  it("should set isLoading to true with 'fetchFullOffer' pending action", () => {
+    const result = currentOfferSlice.reducer(
+      initialState,
+      fetchFullOffer.pending
+    );
 
     expect(result.isLoading).toEqual(true);
   });
 
-  it('should set isLoading to false with \'fetchFullOffer\' fulfilled or rejected action', () => {
-    let result = currentOfferSlice.reducer(initialState, fetchFullOffer.fulfilled);
+  it("should set isLoading to false with 'fetchFullOffer' fulfilled or rejected action", () => {
+    let result = currentOfferSlice.reducer(
+      initialState,
+      fetchFullOffer.fulfilled
+    );
 
     expect(result.isLoading).toEqual(false);
 
@@ -92,13 +110,13 @@ describe('Current Offer slice', () => {
     expect(result.isLoading).toEqual(false);
   });
 
-  it('should clear current offer with \'clearOffer\' action', () => {
+  it("should clear current offer with 'clearOffer' action", () => {
     initialState = {
       offer: generateOffer(),
       reviews: [generateReview()],
       nearbyOffers: [generateOffer(), generateOffer()],
       isError: true,
-      isLoading: true
+      isLoading: true,
     };
 
     const result = currentOfferSlice.reducer(initialState, clearOffer());

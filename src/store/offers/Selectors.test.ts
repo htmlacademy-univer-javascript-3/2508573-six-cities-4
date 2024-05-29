@@ -3,11 +3,7 @@ import { generateOffer } from '../../mocks/Offer';
 import { cityOffersSelector } from './Selectors';
 
 describe('cityOffersSelector', () => {
-  const offers = [
-    generateOffer(),
-    generateOffer(),
-    generateOffer()
-  ];
+  const offers = [generateOffer(), generateOffer(), generateOffer()];
   offers[1].city = offers[0].city;
   offers[2].city.name = '123';
   offers[0].price = 1;
@@ -19,7 +15,7 @@ describe('cityOffersSelector', () => {
       offers: offers,
       sortingOrder: 'Price: low to high',
       offersLoadingStatus: false,
-      favorites: []
+      favorites: [],
     },
     city: {
       city: offers[0].city.name,
