@@ -11,7 +11,11 @@ type GenericCardListProps = {
   onItemHover?: (id: Nullable<string>) => void;
 };
 
-export function CardList({ offers, onItemHover, ...props }: GenericCardListProps) {
+export function CardList({
+  offers,
+  onItemHover,
+  ...props
+}: GenericCardListProps) {
   return offers.map((offer) => (
     <MemoPlaceCard
       key={offer.id}
@@ -22,7 +26,10 @@ export function CardList({ offers, onItemHover, ...props }: GenericCardListProps
   ));
 }
 
-type CardListProps = Omit<GenericCardListProps, 'width' | 'height' | 'cardType'>;
+type CardListProps = Omit<
+  GenericCardListProps,
+  'width' | 'height' | 'cardType'
+>;
 
 export const PlaceCardList = (props: CardListProps) => (
   <CardList {...props} width={260} height={200} cardType="cities" />
@@ -39,10 +46,5 @@ export const FavoritesCardList = (props: CardListProps) => (
 );
 
 export const NearbyCardList = (props: CardListProps) => (
-  <CardList
-    {...props}
-    width={260}
-    height={200}
-    cardType="near-places"
-  />
+  <CardList {...props} width={260} height={200} cardType="near-places" />
 );
