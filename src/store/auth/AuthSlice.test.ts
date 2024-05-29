@@ -1,7 +1,9 @@
 ﻿import { authSlice, AuthState } from './AuthSlice';
 import { AuthorizationStatus } from '../../Constants';
 import { generateUser } from '../../mocks/User';
-import { checkAuthAction } from '../ApiActions';
+import { checkAuthAction, loginAction, logoutAction } from '../ApiActions';
+import * as tokenStorage from '../../services/token';
+import { AuthData } from '../../entities/AuthData';
 
 describe('Auth slice', () => {
   let initialState: AuthState;
@@ -37,5 +39,35 @@ describe('Auth slice', () => {
     const result = authSlice.reducer(initialState, checkAuthAction.rejected);
 
     expect(result.authorizationStatus).toEqual(AuthorizationStatus.NoAuth);
+  });
+
+  it('should call "saveToken" once with the received token, set authStatus and user', () => {
+    const fakeUser = generateUser();
+    const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');
+
+    const result = authSlice.reducer(
+      initialState,
+      loginAction.fulfilled(fakeUser, '', {} as AuthData)
+    );
+
+    expect(result.authorizationStatus).toEqual(AuthorizationStatus.Auth);
+    expect(result.user).toEqual(fakeUser);
+    expect(mockSaveToken).toHaveBeenCalledTimes(1);
+    expect(mockSaveToken).toHaveBeenCalledWith(fakeUser.token);
+  });
+
+  it('should call "dropToken" once with the received token, clear authStatus and user', () => {
+    initialState.authorizationStatus = AuthorizationStatus.Auth;
+    initialState.user = generateUser();
+    const mockDropToken = vi.spyOn(tokenStorage, 'dropToken');
+
+    const result = authSlice.reducer(
+      initialState,
+      logoutAction.fulfilled
+    );
+
+    expect(result.authorizationStatus).toEqual(AuthorizationStatus.NoAuth);
+    expect(result.user).toBeNull();
+    expect(mockDropToken).toHaveBeenCalledTimes(1);
   });
 });
