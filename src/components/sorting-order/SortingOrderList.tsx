@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { SortingOrder, sortingOrders } from '../../entities/SortingOrder';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { changeSortingOrder } from '../../store/offers/OffersSlice';
+import '../../../markup/css/main.css';
 
 function SortingOrderListInternal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,9 +18,9 @@ function SortingOrderListInternal() {
   };
 
   return (
-    <form className="places__sorting" action="#" method="get">
+    <form className="places__sorting" action="#" method="get" data-testid="places__sorting">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0} onClick={open}>
+      <span className="places__sorting-type" data-testid="places__sotring-type" tabIndex={0} onClick={open}>
         {selectedOrder}
         <svg className="places__sorting-arrow" width={7} height={4}>
           <use xlinkHref="#icon-arrow-select" />
@@ -29,6 +30,7 @@ function SortingOrderListInternal() {
         className={cn('places__options', 'places__options--custom', {
           'places__options--opened': isOpen,
         })}
+        data-testid="places__options"
       >
         {Object.keys(sortingOrders).map((order) => (
           <li
@@ -38,6 +40,7 @@ function SortingOrderListInternal() {
             })}
             tabIndex={0}
             onClick={() => changeOrder(order as SortingOrder)}
+            data-testid="places__option"
           >
             {order}
           </li>

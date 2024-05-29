@@ -23,7 +23,7 @@ export function withHistory(
 
 type ComponentWithMockStore = {
   withStoreComponent: JSX.Element;
-  mockStore: MockStore;
+  mockStore: MockStore<State>;
   mockAxiosAdapter: MockAdapter;
 };
 
