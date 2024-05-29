@@ -14,9 +14,9 @@ export function ErrorMessage({ message, onClose }: ErrorMessageProps) {
   };
 
   return (
-    <div className={styles['error-message']} onAnimationEnd={handleAnimationEnd}>
-      <p>{message}</p>
-      <button onClick={onClose}>Close</button>
+    <div className={styles['error-message']} data-testid="error-message" onAnimationEnd={handleAnimationEnd}>
+      <p data-testid="error-message-text">{message}</p>
+      <button onClick={onClose} data-testid="error-message__close-button">Close</button>
     </div>
   );
 }
