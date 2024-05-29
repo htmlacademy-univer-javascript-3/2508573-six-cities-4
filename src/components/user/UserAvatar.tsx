@@ -10,13 +10,14 @@ type UserAvatarProps = {
 };
 
 
-function UserAvatar({ user, type, alt, className, size }: UserAvatarProps) {
+export function UserAvatar({ user, type, alt, className, size }: UserAvatarProps) {
   return (
-    <div className={cn(className, 'user')}>
+    <div className={cn(className, 'user')} data-testid="user-container">
       <div
         className={cn(`${type}__avatar-wrapper`, 'user__avatar-wrapper', {
           'offer__avatar-wrapper--pro': type === 'offer' && user.isPro,
         })}
+        data-testid="user__avatar"
       >
         <img
           className={cn(`${type}__avatar `, 'user__avatar')}
@@ -24,11 +25,12 @@ function UserAvatar({ user, type, alt, className, size }: UserAvatarProps) {
           width={size}
           height={size}
           alt={alt}
+          data-testid="user__avatar-image"
         />
       </div>
-      <span className={`${type}__user-name`}>{user.name}</span>
+      <span className={`${type}__user-name`} data-testid="user__name">{user.name}</span>
       {type === 'offer' && user.isPro && (
-        <span className={`${type}__user-status`}>Pro</span>
+        <span className={`${type}__user-status`} data-testid="user__status">Pro</span>
       )}
     </div>
   );
