@@ -2,18 +2,22 @@
 import MockAdapter from 'axios-mock-adapter';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
 import { createAPI } from '../services/api';
 import { AppThunkDispatch } from './Utils';
 import thunk from 'redux-thunk';
 import { Action } from '@reduxjs/toolkit';
 import { State } from '../entities/State';
+import { createMemoryHistory, MemoryHistory } from 'history';
+import { HistoryRouter } from './Router';
 
-export function withHistory(component: JSX.Element) {
+export function withHistory(
+  component: JSX.Element,
+  history: MemoryHistory = createMemoryHistory()
+) {
   return (
-    <MemoryRouter>
+    <HistoryRouter history={history}>
       <HelmetProvider>{component}</HelmetProvider>
-    </MemoryRouter>
+    </HistoryRouter>
   );
 }
 
