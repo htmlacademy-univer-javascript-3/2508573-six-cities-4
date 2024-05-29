@@ -27,6 +27,7 @@ export function PlaceCard({
       className={cn('place-card', `${cardType}__card`)}
       onMouseOver={() => onHover?.call(null, offer.id)}
       onMouseLeave={() => onHover?.call(null, null)}
+      data-testid="place-card"
     >
       {offer.isPremium && (
         <div className="place-card__mark">
