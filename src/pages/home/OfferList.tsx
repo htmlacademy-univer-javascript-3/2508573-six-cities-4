@@ -29,15 +29,12 @@ export function OfferList({ offers, city }: OfferListProps) {
         </div>
       </section>
       <div className="cities__right-section">
-        {city && (
-          <Map
-            city={city}
-            points={points}
-            selected={points.find((p) => p.name === selectedId)}
-            className="cities__map"
-            data-testid="cities__map"
-          />
-        )}
+        <Map
+          city={city}
+          points={points}
+          selected={points.find((p) => p.name === selectedId)}
+          className="cities__map"
+        />
       </div>
     </>
   );
