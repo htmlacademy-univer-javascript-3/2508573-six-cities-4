@@ -9,7 +9,7 @@ type BookmarkButtonProps = FavoriteData & {
   type: string;
 };
 
-function BookmarkButton({ offerId, isFavorite, type }: BookmarkButtonProps) {
+export function BookmarkButton({ offerId, isFavorite, type }: BookmarkButtonProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const addToFavorites = () => {
@@ -27,6 +27,7 @@ function BookmarkButton({ offerId, isFavorite, type }: BookmarkButtonProps) {
       })}
       type="button"
       onClick={addToFavorites}
+      data-testid="bookmark-button"
     >
       <svg className={`${type}__bookmark-icon`} width={18} height={19}>
         <use xlinkHref="#icon-bookmark" />

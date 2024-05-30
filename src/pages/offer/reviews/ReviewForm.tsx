@@ -45,7 +45,7 @@ export default function ReviewForm() {
   };
 
   return (
-    <form className="reviews__form form" onSubmit={onSubmit}>
+    <form className="reviews__form form" onSubmit={onSubmit} data-testid="reviews__form">
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -58,6 +58,7 @@ export default function ReviewForm() {
           type="radio"
           checked={formData.rating === 5}
           onChange={handleRatingChange}
+          data-testid="reviews__rating-input"
         />
         <label
           htmlFor="5-stars"
@@ -76,6 +77,7 @@ export default function ReviewForm() {
           type="radio"
           checked={formData.rating === 4}
           onChange={handleRatingChange}
+          data-testid="reviews__rating-input"
         />
         <label
           htmlFor="4-stars"
@@ -94,6 +96,7 @@ export default function ReviewForm() {
           type="radio"
           checked={formData.rating === 3}
           onChange={handleRatingChange}
+          data-testid="reviews__rating-input"
         />
         <label
           htmlFor="3-stars"
@@ -112,6 +115,7 @@ export default function ReviewForm() {
           type="radio"
           checked={formData.rating === 2}
           onChange={handleRatingChange}
+          data-testid="reviews__rating-input"
         />
         <label
           htmlFor="2-stars"
@@ -130,6 +134,7 @@ export default function ReviewForm() {
           type="radio"
           checked={formData.rating === 1}
           onChange={handleRatingChange}
+          data-testid="reviews__rating-input"
         />
         <label
           htmlFor="1-star"
@@ -151,6 +156,7 @@ export default function ReviewForm() {
         minLength={50}
         onChange={handleCommentChange}
         disabled={formData.disabled}
+        data-testid="reviews__textarea"
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -167,6 +173,7 @@ export default function ReviewForm() {
             formData.comment.length < 50 ||
             formData.rating === 0
           }
+          data-testid="reviews__submit"
         >
           Submit
         </button>

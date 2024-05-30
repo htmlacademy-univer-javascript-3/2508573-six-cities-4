@@ -2,6 +2,6 @@
 
 export function Spinner() {
   return (
-    <div className={styles['cities__places-loading']} />
+    <div className={styles['cities__places-loading']} data-testid="spinner"/>
   );
 }

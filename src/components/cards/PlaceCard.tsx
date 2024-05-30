@@ -27,6 +27,7 @@ export function PlaceCard({
       className={cn('place-card', `${cardType}__card`)}
       onMouseOver={() => onHover?.call(null, offer.id)}
       onMouseLeave={() => onHover?.call(null, null)}
+      data-testid="place-card"
     >
       {offer.isPremium && (
         <div className="place-card__mark">
@@ -60,7 +61,7 @@ export function PlaceCard({
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
+        <h2 className="place-card__name" data-testid="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>

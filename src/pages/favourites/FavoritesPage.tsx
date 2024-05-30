@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import cn from 'classnames';
 
-export function FavouritesPage() {
+export function FavoritesPage() {
   const favorites = useAppSelector((state) => state.offers.favorites);
   const isEmpty = favorites.length === 0;
 
@@ -17,6 +17,7 @@ export function FavouritesPage() {
         className={cn('page__main', 'page__main--favorites', {
           'page__main--favorites-empty': isEmpty,
         })}
+        data-testid="favorites-page"
       >
         <div className="page__favorites-container container">
           <section className={cn('favorites', { 'favorites--empty': isEmpty })}>
