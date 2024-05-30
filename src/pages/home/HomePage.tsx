@@ -24,6 +24,7 @@ export function HomePage() {
         className={cn('page__main', 'page__main--index', {
           'page__main--index-empty': isEmpty,
         })}
+        data-testid="homepage"
       >
         <h1 className="visually-hidden">Cities</h1>
         <Tabs
