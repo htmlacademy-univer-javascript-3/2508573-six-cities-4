@@ -10,7 +10,7 @@ import { MockStore } from '@jedmao/redux-mock-store';
 import { extractActionsTypes } from '../../mocks/Utils';
 import { fetchFullOffer } from '../../store/ApiActions';
 
-describe('UseOfferPage', () => {
+describe('Hook: UseOfferPage', () => {
   let wrapper: React.JSXElementConstructor<{
     children: React.ReactElement;
   }>;
