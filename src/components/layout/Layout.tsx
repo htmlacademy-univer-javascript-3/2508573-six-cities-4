@@ -56,10 +56,10 @@ export default function Layout() {
                         className="header__nav-link header__nav-link--profile"
                       >
                         <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                        <span className="header__user-name user__name">
+                        <span className="header__user-name user__name" data-testid="layout__user-email">
                           {user.email}
                         </span>
-                        <span className="header__favorite-count">
+                        <span className="header__favorite-count" data-testid="layout__favorite-count">
                           {favoriteCount}
                         </span>
                       </Link>
@@ -69,6 +69,7 @@ export default function Layout() {
                         to={AppRoutes.Main}
                         onClick={logOut}
                         className="header__nav-link"
+                        data-testid="layout__logout-button"
                       >
                         <span className="header__signout">Sign out</span>
                       </Link>
@@ -79,6 +80,7 @@ export default function Layout() {
                     <Link
                       className="header__nav-link header__nav-link--profile"
                       to={AppRoutes.Login}
+                      data-testid="layout__login-button"
                     >
                       <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                       <span className="header__login">Sign in</span>
