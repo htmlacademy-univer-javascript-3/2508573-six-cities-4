@@ -45,6 +45,6 @@ export default function Map({ city, selected, points, className }: MapProps) {
   }, [map, points, selected]);
 
   return (
-    <div style={{ height: '100%' }} ref={mapRef} className={className} />
+    <div style={{ height: '100%' }} ref={mapRef} className={className} data-testid="map" />
   );
 }

@@ -24,7 +24,6 @@ export function OfferPage() {
   const { offer, reviews, nearbyOffers, isError, isLoading } = useOfferPage();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     if (isError) {
       navigate(AppRoutes.NotFound);
@@ -55,7 +54,7 @@ export function OfferPage() {
       <Helmet>
         <title>6 cities: offer</title>
       </Helmet>
-      <main className="page__main page__main--offer">
+      <main className="page__main page__main--offer" data-testid="offer-page">
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
@@ -69,18 +68,18 @@ export function OfferPage() {
           <div className="offer__container container">
             <div className="offer__wrapper">
               {offer.isPremium && (
-                <div className="offer__mark">
+                <div className="offer__mark" data-testid="offer-premium">
                   <span>Premium</span>
                 </div>
               )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">{offer.title}</h1>
+                <h1 className="offer__name" data-testid="offer-title">{offer.title}</h1>
                 <OfferBookmarkButton
                   offerId={offer.id}
                   isFavorite={offer.isFavorite}
                 />
               </div>
-              <div className="offer__rating rating">
+              <div className="offer__rating rating" data-testid="offer-rating">
                 <div className="offer__stars rating__stars">
                   <span style={{ width: `${(offer.rating * 100) / 5}%` }} />
                   <span className="visually-hidden">Rating</span>
@@ -101,10 +100,10 @@ export function OfferPage() {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{offer.price}</b>
+                <b className="offer__price-value" data-testid="offer-price">&euro;{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
-              <OfferGoods items={offer.goods} />
+              <OfferGoods items={offer.goods}/>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <OfferUserAvatar
@@ -116,8 +115,8 @@ export function OfferPage() {
                   <p className="offer__text">{offer.description}</p>
                 </div>
               </div>
-              <section className="offer__reviews reviews">
-                <ReviewList reviews={reviews} />
+              <section className="offer__reviews reviews" data-testid="reviews-section">
+                <ReviewList reviews={reviews}/>
                 {authStatus === AuthorizationStatus.Auth && <ReviewForm />}
               </section>
             </div>
@@ -139,7 +138,7 @@ export function OfferPage() {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <div className="near-places__list places__list">
+            <div className="near-places__list places__list" data-testid="nearby-offers">
               <NearbyCardList offers={displayedOffers} />
             </div>
           </section>
