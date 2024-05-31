@@ -180,10 +180,10 @@ export const fetchFullOffer = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('FETCH_FULL_OFFER', (offerId, { dispatch }) => {
-  dispatch(fetchOffer(offerId));
-  dispatch(fetchReviews(offerId));
-  dispatch(fetchNearbyOffers(offerId));
+>('FETCH_FULL_OFFER', async (offerId, { dispatch }) => {
+  await dispatch(fetchOffer(offerId)).unwrap();
+  await dispatch(fetchReviews(offerId)).unwrap();
+  await dispatch(fetchNearbyOffers(offerId)).unwrap();
 });
 
 export const sendReview = createAsyncThunk<
@@ -198,11 +198,8 @@ export const sendReview = createAsyncThunk<
   'SEND_REVIEW',
   async (
     { offerId, formData },
-    { getState, rejectWithValue, extra: api }
+    { extra: api }
   ) => {
-    if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
-      return rejectWithValue('Unauthorized');
-    }
     const { data: review } = await api.post<Review>(
       buildUrl(ApiRoutes.Comments, { offerId }),
       formData

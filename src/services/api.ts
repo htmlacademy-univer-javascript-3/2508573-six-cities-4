@@ -1,8 +1,9 @@
-﻿import axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
+﻿import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import { getToken } from './token';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { addErrorMessage } from '../store/errors/ErrorsSlice';
+import { ApiRoutes } from '../Constants';
 
 let store: ToolkitStore;
 
@@ -13,15 +14,19 @@ export const injectStore = (_store: ToolkitStore) => {
 type DetailMessageType = {
   type: string;
   message: string;
-}
+};
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
+  [StatusCodes.NOT_FOUND]: true,
 };
 
-const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
+const shouldDisplayError = (response: AxiosResponse) =>
+  !!StatusCodeMapping[response.status] &&
+  !(
+    response.config.url === ApiRoutes.Login && response.config.method === 'get'
+  );
 
 const BACKEND_URL = 'https://14.design.htmlacademy.pro';
 
@@ -47,7 +52,7 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<DetailMessageType>) => {
       if (error.response && shouldDisplayError(error.response)) {
-        const detailMessage = (error.response.data);
+        const detailMessage = error.response.data;
 
         store.dispatch(addErrorMessage(detailMessage.message));
       }
