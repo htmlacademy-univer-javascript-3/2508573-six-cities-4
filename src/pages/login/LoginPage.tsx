@@ -37,6 +37,7 @@ export function LoginPage() {
                 className="locations__item-link"
                 to={AppRoutes.Main}
                 onClick={() => dispatch(changeCity(randomCity))}
+                data-testid="locations__city-link"
               >
                 <span>{randomCity}</span>
               </Link>
