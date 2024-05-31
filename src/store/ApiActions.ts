@@ -182,8 +182,8 @@ export const fetchFullOffer = createAsyncThunk<
   }
 >('FETCH_FULL_OFFER', async (offerId, { dispatch }) => {
   await dispatch(fetchOffer(offerId)).unwrap();
-  await dispatch(fetchReviews(offerId)).unwrap();
-  await dispatch(fetchNearbyOffers(offerId)).unwrap();
+  dispatch(fetchReviews(offerId));
+  dispatch(fetchNearbyOffers(offerId));
 });
 
 export const sendReview = createAsyncThunk<
@@ -198,8 +198,11 @@ export const sendReview = createAsyncThunk<
   'SEND_REVIEW',
   async (
     { offerId, formData },
-    { extra: api }
+    { getState, rejectWithValue, extra: api }
   ) => {
+    if (getState().auth.authorizationStatus !== AuthorizationStatus.Auth) {
+      return rejectWithValue('Unauthorized');
+    }
     const { data: review } = await api.post<Review>(
       buildUrl(ApiRoutes.Comments, { offerId }),
       formData
