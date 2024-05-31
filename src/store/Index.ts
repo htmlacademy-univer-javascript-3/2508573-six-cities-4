@@ -1,5 +1,5 @@
 ﻿import { configureStore } from '@reduxjs/toolkit';
-import { createAPI } from '../services/api';
+import { createAPI, injectStore } from '../services/api';
 import cityReducer from './city/CitySlice';
 import offersReducer from './offers/OffersSlice';
 import authReducer from './auth/AuthSlice';
@@ -23,3 +23,5 @@ export const store = configureStore({
       },
     }),
 });
+
+injectStore(store);

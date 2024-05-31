@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { PlaceCard } from './PlaceCard';
 import { generateOffer } from '../../mocks/Offer';
 import { withHistory, withStore } from '../../mocks/MockComponent';
+import { capitalizeFirstLetter } from '../../services/utils';
 
 describe('Component: PlaceCard', () => {
   const mockOffer = generateOffer();
@@ -16,7 +17,7 @@ describe('Component: PlaceCard', () => {
 
     expect(screen.getByText(mockOffer.title)).toBeInTheDocument();
     expect(screen.getByText(`€${mockOffer.price}`)).toBeInTheDocument();
-    expect(screen.getByText(mockOffer.type)).toBeInTheDocument();
+    expect(screen.getByText(capitalizeFirstLetter(mockOffer.type))).toBeInTheDocument();
     expect(screen.getByAltText('Place image')).toBeInTheDocument();
   });
 

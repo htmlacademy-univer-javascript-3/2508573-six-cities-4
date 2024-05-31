@@ -4,6 +4,7 @@ import { CardBookmarkButton } from './BookmarkButton';
 import cn from 'classnames';
 import { Nullable } from 'vitest';
 import { memo } from 'react';
+import { capitalizeFirstLetter } from '../../services/utils';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -64,7 +65,7 @@ export function PlaceCard({
         <h2 className="place-card__name" data-testid="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
   );

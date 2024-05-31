@@ -1,12 +1,15 @@
 ﻿import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
-import { AppRoutes, AuthorizationStatus } from '../../Constants';
-import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { AppRoutes, AuthorizationStatus, Cities } from '../../Constants';
+import { useEffect, useMemo } from 'react';
 import { LoginForm } from './LoginForm';
+import { randomChoice } from '../../services/utils';
+import { changeCity } from '../../store/city/CitySlice';
 
 export function LoginPage() {
   const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,6 +17,8 @@ export function LoginPage() {
       navigate(AppRoutes.Main);
     }
   }, [authStatus, navigate]);
+
+  const randomCity = useMemo(() => randomChoice(Cities), []);
 
   return (
     <>
@@ -28,8 +33,13 @@ export function LoginPage() {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to="/">
-                <span>Amsterdam</span>
+              <Link
+                className="locations__item-link"
+                to={AppRoutes.Main}
+                onClick={() => dispatch(changeCity(randomCity))}
+                data-testid="locations__city-link"
+              >
+                <span>{randomCity}</span>
               </Link>
             </div>
           </section>

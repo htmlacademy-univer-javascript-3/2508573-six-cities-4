@@ -180,8 +180,8 @@ export const fetchFullOffer = createAsyncThunk<
     state: State;
     extra: AxiosInstance;
   }
->('FETCH_FULL_OFFER', (offerId, { dispatch }) => {
-  dispatch(fetchOffer(offerId));
+>('FETCH_FULL_OFFER', async (offerId, { dispatch }) => {
+  await dispatch(fetchOffer(offerId)).unwrap();
   dispatch(fetchReviews(offerId));
   dispatch(fetchNearbyOffers(offerId));
 });

@@ -18,6 +18,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Spinner } from '../../components/spinner/Spinner';
 import { clearOffer } from '../../store/currentOffer/CurrentOfferSlice';
+import pluralize from 'pluralize';
+import { capitalizeFirstLetter } from '../../services/utils';
 
 export function OfferPage() {
   const authStatus = useAppSelector((state) => state.auth.authorizationStatus);
@@ -90,13 +92,13 @@ export function OfferPage() {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {offer.type}
+                  {capitalizeFirstLetter(offer.type)}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offer.bedrooms} Bedrooms
+                  {offer.bedrooms} {pluralize('Bedroom', offer.bedrooms)}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} adults
+                  Max {offer.maxAdults} {pluralize('adult', offer.maxAdults)}
                 </li>
               </ul>
               <div className="offer__price">
